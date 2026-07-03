@@ -1,0 +1,96 @@
+<template>
+    <lightning-card class="dashboard-card" variant="narrow">
+        <div class="dashboard-header">
+            <div class="brand">
+                <img src={logoUrl} alt="Connected Executive Education logo" class="brand-logo" />
+            </div>
+            <div class="header-actions">
+                <slot name="actions"></slot>
+            </div>
+        </div>
+
+        <template if:true={errorMessage}>
+            <div class="error-banner">
+                <lightning-icon icon-name="utility:error" size="small"></lightning-icon>
+                <span>{errorMessage}</span>
+            </div>
+        </template>
+
+        <div class="search-row">
+            <lightning-input
+                type="search"
+                placeholder="Search by student, email, course..."
+                variant="label-hidden"
+                class="search-input"
+                value={searchTerm}
+                onchange={handleSearchChange}
+            ></lightning-input>
+        </div>
+
+        <div class="table-container top-spacing">
+            <div class="table-header">
+                <div class="table-title">Course Enrollments</div>
+                <div class="table-subtitle">Most recent enrollments with progress</div>
+            </div>
+
+            <template if:true={hasEnrollments}>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th class="column-progress">Progress</th>
+                            <th>Created</th>
+                            <th>Enrollment ID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={filteredEnrollments} for:item="enrollment">
+                            <tr key={enrollment.recordId}>
+                                <td class="cell-primary">{enrollment.studentName}</td>
+                                <td>
+                                    <lightning-formatted-email value={enrollment.studentEmail}></lightning-formatted-email>
+                                </td>
+                                <td>
+                                    <div class="course-name">{enrollment.courseName}</div>
+                                    <div class="course-code">{enrollment.courseCode}</div>
+                                </td>
+                                <td>
+                                    <div class="progress-container">
+                                        <lightning-progress-bar
+                                            class="progress-bar"
+                                            value={enrollment.progress}
+                                            size="medium"
+                                        ></lightning-progress-bar>
+                                        <span class="progress-value">{enrollment.progress}%</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <lightning-formatted-date-time
+                                        value={enrollment.createdDate}
+                                        year="numeric"
+                                        month="2-digit"
+                                        day="2-digit"
+                                    ></lightning-formatted-date-time>
+                                </td>
+                                <td>
+                                    <lightning-formatted-text
+                                        value={enrollment.enrollmentNumber}
+                                    ></lightning-formatted-text>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </template>
+            <template if:false={hasEnrollments}>
+                <div class="empty-state">
+                    <lightning-icon icon-name="utility:people" size="large"></lightning-icon>
+                    <p>No enrollments have been created yet.</p>
+                    <p>Create a new enrollment to populate this dashboard.</p>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
