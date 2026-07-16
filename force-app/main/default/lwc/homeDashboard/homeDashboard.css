@@ -1,0 +1,51 @@
+.container{
+
+    padding:20px;
+
+    text-align:center;
+
+}
+
+.heading{
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    color:#16325c;
+
+}
+
+.subHeading{
+
+    font-size:18px;
+
+    margin-bottom:25px;
+
+    color:gray;
+
+}
+
+.cardContainer{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:20px;
+
+}
+
+.inner{
+
+    padding:20px;
+
+    text-align:center;
+
+}
+
+lightning-button{
+
+    margin-top:15px;
+
+}

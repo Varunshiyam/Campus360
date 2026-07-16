@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Issue_Date_cannot_be_before_Request_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>Issue_Date__c &lt; Request_Date__c</errorConditionFormula>
+    <errorMessage>Issue Date cannot be before Request Date.</errorMessage>
+</ValidationRule>

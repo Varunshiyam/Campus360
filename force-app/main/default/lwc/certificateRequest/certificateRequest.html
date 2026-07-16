@@ -1,0 +1,65 @@
+<template>
+    <lightning-card title="Apply for Certificate" icon-name="standard:record">
+        <div class="slds-p-around_medium">
+            <!-- Step 1: Verification -->
+            <template if:false={isVerified}>
+                <div class="slds-form-element slds-m-bottom_medium">
+                    <lightning-input 
+                        label="Verify Student ID or College Email" 
+                        value={searchKey} 
+                        onchange={handleSearchKeyChange}
+                        placeholder="e.g. STU12345 or student@kce.ac.in"
+                        required>
+                    </lightning-input>
+                </div>
+                <lightning-button 
+                    label="Verify Identity" 
+                    variant="brand" 
+                    onclick={handleVerify}
+                    loading={isVerifying}>
+                </lightning-button>
+            </template>
+
+            <!-- Step 2: Form Submission -->
+            <template if:true={isVerified}>
+                <div class="slds-box slds-theme_shade slds-m-bottom_medium">
+                    <p class="slds-text-heading_small">Verified Student Profile</p>
+                    <p><strong>Name:</strong> {studentName}</p>
+                    <p><strong>Student ID:</strong> {searchKey}</p>
+                    <lightning-button 
+                        label="Change Student" 
+                        variant="neutral" 
+                        size="small"
+                        class="slds-m-top_x-small" 
+                        onclick={handleReset}>
+                    </lightning-button>
+                </div>
+
+                <lightning-record-edit-form 
+                    object-api-name="Certificate_request__c"
+                    onsuccess={handleSuccess}
+                    onerror={handleError}
+                    onsubmit={handleSubmit}>
+                    
+                    <lightning-messages></lightning-messages>
+
+                    <!-- Form Fields -->
+                    <lightning-input-field field-name="Student1__c" value={studentId} disabled></lightning-input-field>
+                    <lightning-input-field field-name="Certificate_Type__c" required></lightning-input-field>
+                    <lightning-input-field field-name="Required_Date__c" required></lightning-input-field>
+                    <lightning-input-field field-name="Reason__c" required></lightning-input-field>
+                    <lightning-input-field field-name="Status__c" value="Pending" disabled></lightning-input-field>
+                    <lightning-input-field field-name="Applied_Date__c" value={todayDate} disabled></lightning-input-field>
+
+                    <div class="slds-m-top_medium">
+                        <lightning-button 
+                            type="submit" 
+                            variant="brand" 
+                            label="Submit Request">
+                        </lightning-button>
+                    </div>
+                </lightning-record-edit-form>
+            </template>
+        </div>
+    </lightning-card>
+</template>

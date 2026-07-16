@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Admission_Date_cannot_be_Future</fullName>
+    <active>true</active>
+    <errorConditionFormula>Admission_Date__c &gt; TODAY()</errorConditionFormula>
+    <errorMessage>Admission Date cannot be future.</errorMessage>
+</ValidationRule>

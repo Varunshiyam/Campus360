@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>College_Email_Only</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    NOT(ISBLANK(Email__c)),
+    NOT(
+        REGEX(
+            Email__c,
+            &quot;^[A-Za-z0-9._%+-]+@(karpagamtech\\.ac\\.in|kce\\.ac\\.in)$&quot;
+        )
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Email__c</errorDisplayField>
+    <errorMessage>Enter a valid college email</errorMessage>
+</ValidationRule>

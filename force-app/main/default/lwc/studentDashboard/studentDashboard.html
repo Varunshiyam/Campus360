@@ -1,0 +1,179 @@
+<template>
+    <div class="slds-p-around_medium portal-container">
+        
+        <!-- Search and Verification Section -->
+        <lightning-card title="Student Portal Dashboard" icon-name="standard:person_account" class="dashboard-header-card">
+            <div class="slds-p-around_medium">
+                <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_8-of-12 slds-p-right_small">
+                        <lightning-input 
+                            type="search" 
+                            label="Enter Student ID or College Email" 
+                            placeholder="e.g. STU12345 or student@kce.ac.in" 
+                            value={searchKey} 
+                            onchange={handleSearchKeyChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_4-of-12 slds-m-top_medium button-col">
+                        <lightning-button 
+                            label="Load Dashboard" 
+                            variant="brand" 
+                            onclick={handleSearch} 
+                            loading={isLoading}
+                            class="search-btn">
+                        </lightning-button>
+                        <template if:true={isVerified}>
+                            <lightning-button 
+                                label="Clear" 
+                                variant="neutral" 
+                                onclick={handleClear} 
+                                class="slds-m-left_small">
+                            </lightning-button>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </lightning-card>
+
+        <!-- Dashboard Content (only shown when student profile is loaded) -->
+        <template if:true={isVerified}>
+            
+            <!-- Student Profile Summary Card -->
+            <div class="slds-m-top_medium">
+                <lightning-card class="profile-card">
+                    <div class="slds-p-around_medium profile-grid">
+                        <div class="slds-grid slds-wrap slds-grid_vertical-align-center">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-12 slds-align_absolute-center">
+                                <div class="avatar-circle">
+                                    {avatarInitials}
+                                </div>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12 slds-p-left_medium profile-info-col">
+                                <h1 class="student-name">{student.Name}</h1>
+                                <p class="student-subtitle">Student Profile | Karpagam College of Engineering</p>
+                                
+                                <div class="slds-grid slds-wrap slds-m-top_medium detail-grid">
+                                    <div class="slds-col slds-size_1-of-2 slds-medium-size_3-of-12">
+                                        <span class="detail-label">Student ID</span>
+                                        <span class="detail-value">{student.Student_ID__c}</span>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-medium-size_3-of-12">
+                                        <span class="detail-label">Department</span>
+                                        <span class="detail-value">{student.Department__c}</span>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-medium-size_2-of-12">
+                                        <span class="detail-label">Semester / Year</span>
+                                        <span class="detail-value">{student.Semester__c} Sem / {student.Year__c} Yr</span>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-medium-size_2-of-12">
+                                        <span class="detail-label">Section</span>
+                                        <span class="detail-value">{student.Section__c}</span>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2 slds-medium-size_2-of-12">
+                                        <span class="detail-label">Status</span>
+                                        <span class="detail-value status-badge">{student.Status__c}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-card>
+            </div>
+
+            <!-- Tabset for Requests and Services (Excluding Fees and Scholarships for guest security) -->
+            <div class="slds-m-top_medium card-container">
+                <lightning-tabset variant="scoped">
+                    
+                    <!-- Certificates Tab -->
+                    <lightning-tab label="Certificate Requests" icon-name="standard:record">
+                        <div class="slds-p-around_medium">
+                            <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                                <h2 class="slds-text-heading_medium">My Certificate Requests</h2>
+                                <lightning-button 
+                                    label="Request Certificate" 
+                                    variant="brand" 
+                                    icon-name="utility:add"
+                                    onclick={navigateToCertificate}>
+                                </lightning-button>
+                            </div>
+                            
+                            <template if:true={hasCertificates}>
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={certificates}
+                                    columns={certificateColumns}
+                                    hide-checkbox-column>
+                                </lightning-datatable>
+                            </template>
+                            <template if:false={hasCertificates}>
+                                <div class="slds-align_absolute-center slds-p-around_large slds-box slds-theme_shade">
+                                    <p class="slds-text-color_weak">No certificate requests found.</p>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-tab>
+
+                    <!-- Complaints Tab -->
+                    <lightning-tab label="Complaints" icon-name="standard:case">
+                        <div class="slds-p-around_medium">
+                            <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                                <h2 class="slds-text-heading_medium">My Submitted Complaints</h2>
+                                <lightning-button 
+                                    label="Raise Complaint" 
+                                    variant="brand" 
+                                    icon-name="utility:add"
+                                    onclick={navigateToComplaint}>
+                                </lightning-button>
+                            </div>
+                            
+                            <template if:true={hasComplaints}>
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={complaints}
+                                    columns={complaintColumns}
+                                    hide-checkbox-column>
+                                </lightning-datatable>
+                            </template>
+                            <template if:false={hasComplaints}>
+                                <div class="slds-align_absolute-center slds-p-around_large slds-box slds-theme_shade">
+                                    <p class="slds-text-color_weak">No complaints registered.</p>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-tab>
+
+                    <!-- ID Card Requests Tab -->
+                    <lightning-tab label="ID Card Requests" icon-name="standard:contact_request">
+                        <div class="slds-p-around_medium">
+                            <div class="slds-grid slds-grid_align-spread slds-m-bottom_small">
+                                <h2 class="slds-text-heading_medium">My ID Card Requests</h2>
+                                <lightning-button 
+                                    label="Request ID Card" 
+                                    variant="brand" 
+                                    icon-name="utility:add"
+                                    onclick={navigateToIdCard}>
+                                </lightning-button>
+                            </div>
+                            
+                            <template if:true={hasIdCards}>
+                                <lightning-datatable
+                                    key-field="Id"
+                                    data={idCards}
+                                    columns={idCardColumns}
+                                    hide-checkbox-column>
+                                </lightning-datatable>
+                            </template>
+                            <template if:false={hasIdCards}>
+                                <div class="slds-align_absolute-center slds-p-around_large slds-box slds-theme_shade">
+                                    <p class="slds-text-color_weak">No ID card requests found.</p>
+                                </div>
+                            </template>
+                        </div>
+                    </lightning-tab>
+
+                </lightning-tabset>
+            </div>
+
+        </template>
+    </div>
+</template>

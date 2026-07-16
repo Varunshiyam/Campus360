@@ -1,0 +1,88 @@
+<template>
+
+    <lightning-card title="College360 Management System"
+                    icon-name="standard:education">
+
+        <div class="container">
+
+            <h1 class="heading">
+                Welcome to College360
+            </h1>
+
+            <p class="subHeading">
+                Finance & Office Management System
+            </p>
+
+            <div class="cardContainer">
+
+                <!-- Finance -->
+
+                <lightning-card title="Finance Department"
+                                icon-name="standard:account">
+
+                    <div class="inner">
+
+                        <p>
+                            Manage Fees, Payments and Scholarships
+                        </p>
+
+                        <lightning-button
+                            label="Open Finance Dashboard"
+                            variant="brand"
+                            onclick={openFinance}>
+                        </lightning-button>
+
+                    </div>
+
+                </lightning-card>
+
+                <!-- Office -->
+
+                <lightning-card title="Office Department"
+                                icon-name="standard:service_appointment">
+
+                    <div class="inner">
+
+                        <p>
+                            Admissions, Certificates,
+                            Complaints and ID Cards
+                        </p>
+
+                        <lightning-button
+                            label="Open Office Dashboard"
+                            variant="brand"
+                            onclick={openOffice}>
+                        </lightning-button>
+
+                    </div>
+
+                </lightning-card>
+
+                <!-- Student -->
+
+                <lightning-card title="Student Portal"
+                                icon-name="standard:person_account">
+
+                    <div class="inner">
+
+                        <p>
+                            View Student Services
+                        </p>
+
+                        <lightning-button
+                            label="Open Student Dashboard"
+                            variant="brand"
+                            onclick={openStudent}>
+                        </lightning-button>
+
+                    </div>
+
+                </lightning-card>
+
+            </div>
+
+        </div>
+
+    </lightning-card>
+
+</template>
