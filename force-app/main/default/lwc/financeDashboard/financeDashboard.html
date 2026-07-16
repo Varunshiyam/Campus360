@@ -1,0 +1,972 @@
+<template>
+  <div class="dashboard-root">
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+      <div class="logo-area">
+        <span class="logo-text">KCE Portal</span>
+      </div>
+      <nav class="nav-menu">
+        <a class={homeClass} data-tab="home" onclick={handleTabClick}>
+          <lightning-icon
+            icon-name="utility:home"
+            size="small"
+            variant="inverse"
+            class="nav-icon"
+          ></lightning-icon>
+          Home
+        </a>
+        <a class={studentsClass} data-tab="students" onclick={handleTabClick}>
+          <lightning-icon
+            icon-name="utility:people"
+            size="small"
+            variant="inverse"
+            class="nav-icon"
+          ></lightning-icon>
+          Students
+        </a>
+        <a class={financeClass} data-tab="finance" onclick={handleTabClick}>
+          <lightning-icon
+            icon-name="utility:currency"
+            size="small"
+            variant="inverse"
+            class="nav-icon"
+          ></lightning-icon>
+          Finance
+        </a>
+        <a class={officeClass} data-tab="office" onclick={handleTabClick}>
+          <lightning-icon
+            icon-name="utility:company"
+            size="small"
+            variant="inverse"
+            class="nav-icon"
+          ></lightning-icon>
+          Office
+        </a>
+        <a
+          class={dashboardsClass}
+          data-tab="dashboards"
+          onclick={handleTabClick}
+        >
+          <lightning-icon
+            icon-name="utility:chart"
+            size="small"
+            variant="inverse"
+            class="nav-icon"
+          ></lightning-icon>
+          Dashboards
+        </a>
+        <a
+          class={scholarshipsClass}
+          data-tab="scholarships"
+          onclick={handleTabClick}
+        >
+          <lightning-icon
+            icon-name="utility:education"
+            size="small"
+            variant="inverse"
+            class="nav-icon"
+          ></lightning-icon>
+          Scholarships
+        </a>
+      </nav>
+    </div>
+
+    <!-- Main Dashboard Content Area -->
+    <div class="main-content">
+      <!-- Header Bar -->
+      <header class="header-bar">
+        <div class="header-titles">
+          <h1 class="header-title">{pageTitle}</h1>
+          <span class="header-subtitle">{pageSubtitle}</span>
+        </div>
+        <div class="header-actions">
+          <lightning-button-icon
+            icon-name="utility:favorite"
+            variant="border-filled"
+            alternative-text="Favorite"
+            class="header-icon-btn"
+          ></lightning-button-icon>
+          <lightning-button-icon
+            icon-name="utility:add"
+            variant="border-filled"
+            alternative-text="Add"
+            class="header-icon-btn"
+          ></lightning-button-icon>
+          <lightning-button-icon
+            icon-name="utility:help"
+            variant="border-filled"
+            alternative-text="Help"
+            class="header-icon-btn"
+          ></lightning-button-icon>
+          <lightning-button-icon
+            icon-name="utility:notification"
+            variant="border-filled"
+            alternative-text="Notifications"
+            class="header-icon-btn"
+          ></lightning-button-icon>
+          <div class="avatar-circle">AD</div>
+        </div>
+      </header>
+
+      <!-- TAB 1: HOME VIEW -->
+      <template if:true={isHome}>
+        <div class="welcome-hero">
+          <h2 class="welcome-title">
+            Welcome to Karpagam College Office Console
+          </h2>
+          <p class="welcome-desc">
+            Manage student fee records, administrative request approvals,
+            scholarship assignments, and system-wide dashboard reports securely
+            in one unified portal.
+          </p>
+        </div>
+
+        <h3 class="section-heading">Quick Actions</h3>
+        <div class="quick-actions">
+          <div
+            class="action-card"
+            data-tab="dashboards"
+            onclick={handleQuickAction}
+          >
+            <span class="action-icon">📈</span>
+            <div class="action-title">View System Metrics</div>
+            <p class="action-desc">
+              Check collections, pending balances, and approval stats.
+            </p>
+          </div>
+          <div
+            class="action-card"
+            data-tab="office"
+            onclick={handleQuickAction}
+          >
+            <span class="action-icon">✉️</span>
+            <div class="action-title">Process Requests</div>
+            <p class="action-desc">
+              Approve or reject Certificate and ID Card requests.
+            </p>
+          </div>
+          <div
+            class="action-card"
+            data-tab="students"
+            onclick={handleQuickAction}
+          >
+            <span class="action-icon">🔍</span>
+            <div class="action-title">Search Students</div>
+            <p class="action-desc">
+              Look up student profiles, sections, and emails.
+            </p>
+          </div>
+        </div>
+      </template>
+
+      <!-- TAB 2: DASHBOARDS VIEW -->
+      <template if:true={isDashboards}>
+        <!-- Welcome Section -->
+        <div class="welcome-admin-block">
+          <div class="welcome-left">
+            <h2 class="welcome-admin-title">
+              Welcome Admin ({currentUserName})
+            </h2>
+            <p class="welcome-admin-desc">
+              Manage student finance and office operations from one centralized
+              Salesforce application.
+            </p>
+          </div>
+          <div class="welcome-right">
+            <div class="welcome-meta-item">
+              <lightning-icon
+                icon-name="utility:event"
+                size="x-small"
+                class="welcome-meta-icon"
+              ></lightning-icon>
+              <span>{todaysDate}</span>
+            </div>
+            <div class="welcome-meta-item">
+              <lightning-icon
+                icon-name="utility:user"
+                size="x-small"
+                class="welcome-meta-icon"
+              ></lightning-icon>
+              <span
+                >Current User:
+                <strong class="meta-highlight">{currentUserName}</strong></span
+              >
+            </div>
+            <div class="welcome-meta-item">
+              <lightning-icon
+                icon-name="utility:company"
+                size="x-small"
+                class="welcome-meta-icon"
+              ></lightning-icon>
+              <span
+                >Organization:
+                <strong class="meta-highlight">{organizationName}</strong></span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Metrics Summary Cards Grid -->
+        <section class="metrics-grid">
+          <!-- Card 1: Total Students -->
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">Total Students</span>
+              <lightning-icon
+                icon-name="utility:people"
+                size="small"
+                class="metric-icon-erp"
+              ></lightning-icon>
+            </div>
+            <div class="metric-value">{studentsCountValue}</div>
+            <div class="metric-trend up">
+              <span class="trend-arrow">▲</span> 8.5%
+              <span class="trend-text">vs last month</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Fee Records -->
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">Fee Records</span>
+              <lightning-icon
+                icon-name="utility:currency"
+                size="small"
+                class="metric-icon-erp"
+              ></lightning-icon>
+            </div>
+            <div class="metric-value">{feeRecordsCountValue}</div>
+            <div class="metric-trend up">
+              <span class="trend-arrow">▲</span> 12.4%
+              <span class="trend-text">vs last month</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Payments Received -->
+          <div class="metric-card highlight">
+            <div class="metric-header">
+              <span class="metric-title">Payments Received</span>
+              <lightning-icon
+                icon-name="utility:money"
+                size="small"
+                class="metric-icon-erp"
+              ></lightning-icon>
+            </div>
+            <div class="metric-value">{paymentsReceivedCountValue}</div>
+            <div class="metric-trend up">
+              <span class="trend-arrow">▲</span> 10.6%
+              <span class="trend-text">vs last month</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Pending Payments -->
+          <div class="metric-card warning">
+            <div class="metric-header">
+              <span class="metric-title">Pending Payments</span>
+              <lightning-icon
+                icon-name="utility:warning"
+                size="small"
+                class="metric-icon-erp"
+              ></lightning-icon>
+            </div>
+            <div class="metric-value">{pendingPaymentsCountValue}</div>
+            <div class="metric-trend down">
+              <span class="trend-arrow">▼</span> 6.1%
+              <span class="trend-text">vs last month</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Scholarships -->
+          <div class="metric-card">
+            <div class="metric-header">
+              <span class="metric-title">Scholarships</span>
+              <lightning-icon
+                icon-name="utility:education"
+                size="small"
+                class="metric-icon-erp"
+              ></lightning-icon>
+            </div>
+            <div class="metric-value">{scholarshipsCountValue}</div>
+            <div class="metric-trend up">
+              <span class="trend-arrow">▲</span> 9.3%
+              <span class="trend-text">vs last month</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quick Actions Section -->
+        <div class="quick-actions-section">
+          <h3 class="section-title">Quick Actions</h3>
+          <div class="quick-actions-grid">
+            <button class="action-btn-erp" onclick={handleAddStudent}>
+              <lightning-icon
+                icon-name="utility:user"
+                size="small"
+                class="action-btn-icon"
+              ></lightning-icon>
+              <span>Add Student</span>
+            </button>
+            <button class="action-btn-erp" onclick={handleRecordPayment}>
+              <lightning-icon
+                icon-name="utility:money"
+                size="small"
+                class="action-btn-icon"
+              ></lightning-icon>
+              <span>Record Payment</span>
+            </button>
+            <button class="action-btn-erp" onclick={handleCertificateRequest}>
+              <lightning-icon
+                icon-name="utility:description"
+                size="small"
+                class="action-btn-icon"
+              ></lightning-icon>
+              <span>Certificate Request</span>
+            </button>
+            <button class="action-btn-erp" onclick={handleRegisterComplaint}>
+              <lightning-icon
+                icon-name="utility:case"
+                size="small"
+                class="action-btn-icon"
+              ></lightning-icon>
+              <span>Register Complaint</span>
+            </button>
+            <button class="action-btn-erp" onclick={handleIdCardRequest}>
+              <lightning-icon
+                icon-name="utility:contact"
+                size="small"
+                class="action-btn-icon"
+              ></lightning-icon>
+              <span>ID Card Request</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Charts Section Grid (6 Charts) -->
+        <h3 class="section-title">Analytical Performance Overview</h3>
+        <section class="charts-grid-row-6">
+          <!-- Chart 1: Fee Status (Donut) -->
+          <div class="chart-card">
+            <h3 class="chart-title">Fee Status</h3>
+            <div class="donut-chart-container">
+              <div class="donut-chart" style={feeStatusDonutStyle}>
+                <div class="donut-center">
+                  <div class="center-value">{feeStatusPaid}%</div>
+                  <div class="center-label">PAID</div>
+                </div>
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-dot fee-paid"></span> Paid
+                  ({feeStatusPaid}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot fee-pending"></span> Pending
+                  ({feeStatusPending}%)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 2: Payment Methods (Pie) -->
+          <div class="chart-card">
+            <h3 class="chart-title">Payment Methods</h3>
+            <div class="donut-chart-container">
+              <div class="donut-chart" style={paymentMethodsPieStyle}>
+                <div class="payment-donut-center"></div>
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-dot method-cash"></span> Cash ({payCash}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot method-upi"></span> UPI ({payUpi}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot method-card"></span> Card ({payCard}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot method-bank"></span> Bank ({payBank}%)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 3: Certificate Requests (Bar) -->
+          <div class="chart-card">
+            <h3 class="chart-title">Certificate Requests</h3>
+            <div class="bar-chart-container-erp">
+              <template for:each={certRequestsBarStats} for:item="bar">
+                <div class="bar-group-erp" key={bar.label}>
+                  <div class="bar-fill-erp" style={bar.style}>
+                    <span class="bar-val-erp">{bar.pct}%</span>
+                  </div>
+                  <span class="bar-lbl-erp">{bar.label}</span>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <!-- Chart 4: Complaint Status (Donut) -->
+          <div class="chart-card">
+            <h3 class="chart-title">Complaint Status</h3>
+            <div class="donut-chart-container">
+              <div class="donut-chart" style={complaintStatusDonutStyle}>
+                <div class="donut-center">
+                  <div class="center-value">{compRes}%</div>
+                  <div class="center-label">RESOLVED</div>
+                </div>
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-dot comp-open"></span> Open ({compOpen}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot comp-ip"></span> In Progress
+                  ({compIp}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot comp-res"></span> Resolved
+                  ({compRes}%)
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart 5: ID Card Requests (Horizontal Bar) -->
+          <div class="chart-card">
+            <h3 class="chart-title">ID Card Requests</h3>
+            <div class="horizontal-bars-container-erp">
+              <template for:each={idCardRequestsHorizontalStats} for:item="row">
+                <div class="hbar-row-erp" key={row.label}>
+                  <span class="hbar-lbl-erp">{row.label}</span>
+                  <div class="hbar-track-erp">
+                    <div class="hbar-fill-erp" style={row.style}></div>
+                  </div>
+                  <span class="hbar-val-erp">{row.pct}%</span>
+                </div>
+              </template>
+            </div>
+          </div>
+
+          <!-- Chart 6: Scholarship Status (Doughnut) -->
+          <div class="chart-card">
+            <h3 class="chart-title">Scholarship Status</h3>
+            <div class="donut-chart-container">
+              <div class="donut-chart" style={scholarshipDoughnutStyle}>
+                <div class="donut-center">
+                  <div class="center-value">{schApprv}%</div>
+                  <div class="center-label">APPROVED</div>
+                </div>
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item">
+                  <span class="legend-dot sch-app"></span> Applied ({schApp}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot sch-apprv"></span> Approved
+                  ({schApprv}%)
+                </div>
+                <div class="legend-item">
+                  <span class="legend-dot sch-rej"></span> Rejected ({schRej}%)
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Activities Table -->
+        <section class="bottom-grid-row slds-m-top_large">
+          <div class="table-card">
+            <h3 class="chart-title">Recent Student Activities</h3>
+            <div class="table-container">
+              <table class="recent-requests-table">
+                <thead>
+                  <tr>
+                    <th>Activity ID</th>
+                    <th>Module</th>
+                    <th>Student Name</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <template for:each={recentRequests} for:item="req">
+                    <tr key={req.id}>
+                      <td class="req-id">{req.id}</td>
+                      <td>{req.type}</td>
+                      <td class="req-student">{req.student}</td>
+                      <td>
+                        <span class="status-badge" data-status={req.status}
+                          >{req.status}</span
+                        >
+                      </td>
+                      <td>{req.date}</td>
+                    </tr>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </template>
+
+      <!-- TAB 4: STUDENTS VIEW -->
+      <template if:true={isStudents}>
+        <div class="tab-card">
+          <div class="tab-header">
+            <h2 class="tab-title">Registered Students List</h2>
+          </div>
+          <div class="table-container">
+            <table class="recent-requests-table">
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Student ID</th>
+                  <th>Email</th>
+                  <th>Department</th>
+                  <th>Semester</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={studentList} for:item="std">
+                  <tr key={std.Id}>
+                    <td class="req-student">{std.Name}</td>
+                    <td class="req-id">{std.Student_ID__c}</td>
+                    <td>{std.Email__c}</td>
+                    <td>{std.Department__c}</td>
+                    <td>{std.Semester__c}</td>
+                    <td>
+                      <span class="status-badge" data-status={std.Status__c}
+                        >{std.Status__c}</span
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
+
+      <!-- TAB 5: FINANCE VIEW -->
+      <template if:true={isFinance}>
+        <div class="tab-card">
+          <div class="tab-header">
+            <h2 class="tab-title">Student Fee Records</h2>
+          </div>
+          <div class="table-container">
+            <table class="recent-requests-table">
+              <thead>
+                <tr>
+                  <th>Fee Name</th>
+                  <th>Student</th>
+                  <th>Academic Year</th>
+                  <th>Semester</th>
+                  <th>Total Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={feeList} for:item="fee">
+                  <tr key={fee.Id}>
+                    <td class="req-id">{fee.Name}</td>
+                    <td class="req-student">{fee.StudentName}</td>
+                    <td>{fee.Academic_Year__c}</td>
+                    <td>{fee.Semester__c}</td>
+                    <td class="fee-amount">₹ {fee.Total_Amount__c}</td>
+                    <td>
+                      <span class="status-badge" data-status={fee.Status__c}
+                        >{fee.Status__c}</span
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="tab-card slds-m-top_large">
+          <div class="tab-header">
+            <h2 class="tab-title">Recent Payments Log</h2>
+          </div>
+          <div class="table-container">
+            <table class="recent-requests-table">
+              <thead>
+                <tr>
+                  <th>Payment Name</th>
+                  <th>Fee Record</th>
+                  <th>Amount Paid</th>
+                  <th>Payment Date</th>
+                  <th>Method</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={paymentList} for:item="pay">
+                  <tr key={pay.Id}>
+                    <td class="req-id">{pay.Name}</td>
+                    <td>{pay.FeeName}</td>
+                    <td class="pay-amount">₹ {pay.Amount_Paid__c}</td>
+                    <td>{pay.Payment_Date__c}</td>
+                    <td>{pay.Payment_Method__c}</td>
+                    <td>
+                      <span class="status-badge" data-status={pay.Status__c}
+                        >{pay.Status__c}</span
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
+
+      <!-- TAB 6: OFFICE VIEW -->
+      <template if:true={isOffice}>
+        <!-- Certificate Requests -->
+        <div class="tab-card">
+          <div class="tab-header">
+            <h2 class="tab-title">Certificate Requests</h2>
+          </div>
+          <div class="table-container">
+            <table class="recent-requests-table">
+              <thead>
+                <tr>
+                  <th>Req No</th>
+                  <th>Student</th>
+                  <th>Type</th>
+                  <th>Applied Date</th>
+                  <th>Required Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={certificateRequests} for:item="c">
+                  <tr key={c.Id}>
+                    <td class="req-id">{c.Request_No__c}</td>
+                    <td class="req-student">{c.StudentName}</td>
+                    <td>{c.Certificate_Type__c}</td>
+                    <td>{c.Applied_Date__c}</td>
+                    <td>{c.Required_Date__c}</td>
+                    <td>
+                      <span class="status-badge" data-status={c.Status__c}
+                        >{c.Status__c}</span
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Complaints -->
+        <div class="tab-card slds-m-top_large">
+          <div class="tab-header">
+            <h2 class="tab-title">Complaint Register</h2>
+          </div>
+          <div class="table-container">
+            <table class="recent-requests-table">
+              <thead>
+                <tr>
+                  <th>Case ID</th>
+                  <th>Student</th>
+                  <th>Category</th>
+                  <th>Subject</th>
+                  <th>Priority</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={complaintRequests} for:item="comp">
+                  <tr key={comp.Id}>
+                    <td class="req-id">{comp.Name}</td>
+                    <td class="req-student">{comp.StudentName}</td>
+                    <td>{comp.Category__c}</td>
+                    <td>{comp.Subject__c}</td>
+                    <td>{comp.Priority__c}</td>
+                    <td>
+                      <span class="status-badge" data-status={comp.Status__c}
+                        >{comp.Status__c}</span
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ID Card Requests -->
+        <div class="tab-card slds-m-top_large">
+          <div class="tab-header">
+            <h2 class="tab-title">ID Card Requests</h2>
+          </div>
+          <div class="table-container">
+            <table class="recent-requests-table">
+              <thead>
+                <tr>
+                  <th>Req No</th>
+                  <th>Student</th>
+                  <th>Reason</th>
+                  <th>Photo Uploaded</th>
+                  <th>Request Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={idCardRequests} for:item="ic">
+                  <tr key={ic.Id}>
+                    <td class="req-id">{ic.Request_No__c}</td>
+                    <td class="req-student">{ic.StudentName}</td>
+                    <td>{ic.Reason__c}</td>
+                    <td>
+                      <lightning-input
+                        type="checkbox"
+                        checked={ic.Photo_Uploaded__c}
+                        disabled
+                        class="photo-checkbox"
+                      ></lightning-input>
+                    </td>
+                    <td>{ic.Request_Date__c}</td>
+                    <td>
+                      <span class="status-badge" data-status={ic.Status__c}
+                        >{ic.Status__c}</span
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
+
+      <!-- TAB 7: SCHOLARSHIPS VIEW -->
+      <template if:true={isScholarships}>
+        <div class="tab-card">
+          <div class="tab-header">
+            <h2 class="tab-title">Scholarships Registry</h2>
+          </div>
+          <div class="table-container">
+            <table class="recent-requests-table">
+              <thead>
+                <tr>
+                  <th>Scholarship Name</th>
+                  <th>Student</th>
+                  <th>Provider</th>
+                  <th>Amount</th>
+                  <th>Percentage</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template for:each={scholarshipList} for:item="sch">
+                  <tr key={sch.Id}>
+                    <td class="req-id">{sch.Name}</td>
+                    <td class="req-student">{sch.StudentName}</td>
+                    <td>{sch.Provider__c}</td>
+                    <td class="pay-amount">₹ {sch.Amount__c}</td>
+                    <td>{sch.Percentage__c}%</td>
+                    <td>
+                      <span
+                        class="status-badge"
+                        data-status={sch.Approval_Status__c}
+                        >{sch.Approval_Status__c}</span
+                      >
+                    </td>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </template>
+
+      <!-- Add Student Modal -->
+      <template if:true={showAddStudentModal}>
+        <section
+          role="dialog"
+          tabindex="-1"
+          aria-modal="true"
+          class="slds-modal slds-fade-in-open"
+        >
+          <div class="slds-modal__container">
+            <header class="slds-modal__header">
+              <button
+                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                title="Close"
+                onclick={closeAddStudentModal}
+              >
+                <lightning-icon
+                  icon-name="utility:close"
+                  size="small"
+                  variant="inverse"
+                ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+              </button>
+              <h2 class="slds-modal__title slds-hyphenate">
+                Add New Student Profile
+              </h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+              <lightning-record-edit-form
+                object-api-name="Student1__c"
+                onsuccess={handleAddStudentSuccess}
+              >
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Name"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Student_ID__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Email__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Department__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Year__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Semester__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Section__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Status__c"
+                    ></lightning-input-field>
+                  </div>
+                </div>
+                <div class="slds-m-top_medium slds-text-align_right">
+                  <lightning-button
+                    label="Cancel"
+                    onclick={closeAddStudentModal}
+                    class="slds-m-right_small"
+                  ></lightning-button>
+                  <lightning-button
+                    type="submit"
+                    label="Save Student"
+                    variant="brand"
+                  ></lightning-button>
+                </div>
+              </lightning-record-edit-form>
+            </div>
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+      </template>
+
+      <!-- Record Payment Modal -->
+      <template if:true={showRecordPaymentModal}>
+        <section
+          role="dialog"
+          tabindex="-1"
+          aria-modal="true"
+          class="slds-modal slds-fade-in-open"
+        >
+          <div class="slds-modal__container">
+            <header class="slds-modal__header">
+              <button
+                class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                title="Close"
+                onclick={closeRecordPaymentModal}
+              >
+                <lightning-icon
+                  icon-name="utility:close"
+                  size="small"
+                  variant="inverse"
+                ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+              </button>
+              <h2 class="slds-modal__title slds-hyphenate">
+                Record New Student Fee Payment
+              </h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium">
+              <lightning-record-edit-form
+                object-api-name="Payment__c"
+                onsuccess={handleRecordPaymentSuccess}
+              >
+                <lightning-messages></lightning-messages>
+                <div class="slds-grid slds-wrap">
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Fee__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Amount_Paid__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Payment_Date__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Payment_Method__c"
+                    ></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-size_1-of-2 slds-p-around_x-small">
+                    <lightning-input-field
+                      field-name="Status__c"
+                    ></lightning-input-field>
+                  </div>
+                </div>
+                <div class="slds-m-top_medium slds-text-align_right">
+                  <lightning-button
+                    label="Cancel"
+                    onclick={closeRecordPaymentModal}
+                    class="slds-m-right_small"
+                  ></lightning-button>
+                  <lightning-button
+                    type="submit"
+                    label="Save Payment"
+                    variant="brand"
+                  ></lightning-button>
+                </div>
+              </lightning-record-edit-form>
+            </div>
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+      </template>
+
+      <!-- College ERP Footer -->
+      <footer class="erp-footer">
+        <div class="footer-top-line">
+          Finance & Office Management System | Developed using Salesforce CRM
+        </div>
+        <div class="footer-bottom-line">
+          Department of Computer Science and Engineering | Karpagam College of
+          Engineering
+        </div>
+      </footer>
+    </div>
+  </div>
+</template>

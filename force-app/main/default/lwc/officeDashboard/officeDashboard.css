@@ -1,0 +1,22 @@
+.summary{
+    display:flex;
+    justify-content:space-around;
+    margin:20px;
+    flex-wrap:wrap;
+}
+
+.box{
+    background:#2e844a;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    width:22%;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+lightning-card{
+    margin:15px;
+}

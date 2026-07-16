@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approved_Date_required_if_Approved</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ISPICKVAL(Approval_Status__c,&quot;Approved&quot;),
+ISBLANK(Approved_Date__c)
+)</errorConditionFormula>
+    <errorMessage>Enter Approved Date.</errorMessage>
+</ValidationRule>

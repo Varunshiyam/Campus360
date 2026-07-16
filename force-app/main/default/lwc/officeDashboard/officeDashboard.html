@@ -1,0 +1,85 @@
+<template>
+
+    <lightning-card title="Office Dashboard" icon-name="standard:service_appointment">
+
+        <!-- Summary Cards -->
+
+        <div class="summary">
+
+            <div class="box">
+                <h2>Admissions</h2>
+                <p>{admissionCount}</p>
+            </div>
+
+            <div class="box">
+                <h2>Certificates</h2>
+                <p>{certificateCount}</p>
+            </div>
+
+            <div class="box">
+                <h2>Complaints</h2>
+                <p>{complaintCount}</p>
+            </div>
+
+            <div class="box">
+                <h2>ID Cards</h2>
+                <p>{idCardCount}</p>
+            </div>
+
+        </div>
+
+        <!-- Admission -->
+
+        <lightning-card title="Admission Details">
+
+            <lightning-datatable
+                key-field="Id"
+                data={admissions}
+                columns={admissionColumns}
+                hide-checkbox-column>
+            </lightning-datatable>
+
+        </lightning-card>
+
+        <!-- Certificate -->
+
+        <lightning-card title="Certificate Requests">
+
+            <lightning-datatable
+                key-field="Id"
+                data={certificates}
+                columns={certificateColumns}
+                hide-checkbox-column>
+            </lightning-datatable>
+
+        </lightning-card>
+
+        <!-- Complaint -->
+
+        <lightning-card title="Complaint Details">
+
+            <lightning-datatable
+                key-field="Id"
+                data={complaints}
+                columns={complaintColumns}
+                hide-checkbox-column>
+            </lightning-datatable>
+
+        </lightning-card>
+
+        <!-- ID Card -->
+
+        <lightning-card title="ID Card Requests">
+
+            <lightning-datatable
+                key-field="Id"
+                data={idCards}
+                columns={idCardColumns}
+                hide-checkbox-column>
+            </lightning-datatable>
+
+        </lightning-card>
+
+    </lightning-card>
+
+</template>

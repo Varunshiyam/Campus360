@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exam_Fee_cannot_be_Negative</fullName>
+    <active>true</active>
+    <errorConditionFormula>Exam_Fee__c &lt; 0</errorConditionFormula>
+    <errorMessage>Exam Fee cannot be negative.</errorMessage>
+</ValidationRule>

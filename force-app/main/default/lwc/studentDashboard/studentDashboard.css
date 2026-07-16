@@ -1,0 +1,155 @@
+/* Custom Theme Styling for Karpagam College of Engineering Student Portal */
+:host {
+    --primary-blue: #1e3a8a;
+    --primary-blue-light: #3b82f6;
+    --accent-orange: #f97316;
+    --white: #ffffff;
+    --grey-light: #f3f4f6;
+    --text-dark: #1f2937;
+    --text-muted: #6b7280;
+}
+
+.portal-container {
+    background-color: var(--grey-light);
+    border-radius: 12px;
+}
+
+/* Dashboard Header Card */
+.dashboard-header-card {
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    background: var(--white);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.button-col {
+    display: flex;
+    align-items: flex-end;
+}
+
+.search-btn {
+    --slds-c-button-brand-background: var(--primary-blue);
+    --slds-c-button-brand-border-color: var(--primary-blue);
+    --slds-c-button-brand-background-hover: var(--primary-blue-light);
+    border-radius: 4px;
+}
+
+/* Profile Card styling */
+.profile-card {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #0f172a 100%);
+    color: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: none;
+}
+
+.profile-card :global(.slds-card) {
+    background: transparent;
+    border: none;
+}
+
+.profile-grid {
+    padding: 24px;
+}
+
+.avatar-circle {
+    width: 90px;
+    height: 90px;
+    background-color: var(--accent-orange);
+    color: var(--white);
+    font-size: 2.2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border: 4px solid var(--white);
+}
+
+.student-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 0;
+}
+
+.student-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-top: 4px;
+}
+
+.detail-grid {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 16px;
+}
+
+.detail-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.detail-value {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 4px;
+    color: var(--white);
+}
+
+.status-badge {
+    background-color: var(--accent-orange);
+    color: var(--white);
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Tabs styling */
+.card-container {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* Custom styling for standard components */
+:host :global(.slds-tabs_scoped) {
+    border: none;
+}
+
+:host :global(.slds-tabs_scoped__nav) {
+    background-color: var(--grey-light);
+    border-radius: 8px;
+    padding: 4px;
+    border: none;
+}
+
+:host :global(.slds-tabs_scoped__item.slds-is-active) {
+    background-color: var(--white);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: none;
+}
+
+:host :global(.slds-tabs_scoped__link) {
+    color: var(--text-muted);
+    font-weight: 600;
+    border: none !important;
+}
+
+:host :global(.slds-tabs_scoped__item.slds-is-active .slds-tabs_scoped__link) {
+    color: var(--primary-blue);
+}
+
+:host :global(.slds-tabs_scoped__content) {
+    border: none;
+    padding-top: 16px;
+}
