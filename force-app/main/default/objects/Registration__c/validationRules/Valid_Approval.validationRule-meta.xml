@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Approval</fullName>
+    <active>true</active>
+    <errorConditionFormula>TEXT(Event__r.Approval_Status__c) &lt;&gt; &quot;Approved&quot;</errorConditionFormula>
+    <errorMessage>Registration is allowed only after the event has been approved.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Registration_Deadline_Before_Event_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>Registration_Deadline__c  &gt;=  Event__r.Start_Date__c</errorConditionFormula>
+    <errorDisplayField>Registration_Deadline__c</errorDisplayField>
+    <errorMessage>Registration Deadline must be before the Event Date.</errorMessage>
+</ValidationRule>
