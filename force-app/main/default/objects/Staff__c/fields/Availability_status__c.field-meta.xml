@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Status__c</fullName>
-    <defaultValue>&quot;Inactive&quot;</defaultValue>
-    <description>Active status for the student.</description>
-    <label>Status</label>
+    <fullName>Availability_status__c</fullName>
+    <label>Availability status</label>
     <required>false</required>
     <trackHistory>false</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
+        <restricted>true</restricted>
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Active</fullName>
+                <fullName>On Duty</fullName>
                 <default>false</default>
-                <label>Active</label>
+                <label>On Duty</label>
             </value>
             <value>
-                <fullName>Inactive</fullName>
-                <default>true</default>
-                <label>Inactive</label>
+                <fullName>Leave</fullName>
+                <default>false</default>
+                <label>Leave</label>
             </value>
             <value>
-                <fullName>Expired</fullName>
+                <fullName>Rest</fullName>
                 <default>false</default>
-                <label>Expired</label>
+                <label>Rest</label>
             </value>
         </valueSetDefinition>
     </valueSet>
