@@ -1,0 +1,108 @@
+<template>
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <h1>Infrastructure Management</h1>
+
+        
+    </div>
+
+    <!-- NAVIGATION -->
+
+    <div class="tabs">
+
+        <div
+            class={complaintClass}
+            onclick={showComplaint}>
+
+            Complaints
+
+        </div>
+
+        <div
+            class={feedbackClass}
+            onclick={showFeedback}>
+
+            Feedback
+
+        </div>
+
+        <div
+            class={employeeClass}
+            onclick={showEmployee}>
+
+            Employees
+
+        </div>
+
+        <div
+            class={toolClass}
+            onclick={showTool}>
+
+            Tools
+
+        </div>
+
+        <div
+            class={dashboardClass}
+            onclick={showDashboard}>
+
+            Dashboard
+
+        </div>
+
+    </div>
+
+
+    <!-- CONTENT -->
+
+    <div class="content">
+
+        <template if:true={isComplaint}>
+
+            <c-infrastructure-complaint-management>
+
+            </c-infrastructure-complaint-management>
+
+        </template>
+
+
+        <template if:true={isFeedback}>
+
+            <c-feedback-management>
+
+            </c-feedback-management>
+
+        </template>
+
+
+        <template if:true={isEmployee}>
+
+            <c-employee-management>
+
+            </c-employee-management>
+
+        </template>
+
+
+        <template if:true={isTool}>
+
+            <c-tools-management>
+
+            </c-tools-management>
+
+        </template>
+
+
+        <template if:true={isDashboard}>
+
+            <c-infrastructure-management-dashboard>
+
+            </c-infrastructure-management-dashboard>
+
+        </template>
+
+    </div>
+
+</template>
