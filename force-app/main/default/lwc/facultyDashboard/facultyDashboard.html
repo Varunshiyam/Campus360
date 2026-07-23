@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Faculty Dashboard" icon-name="standard:person_account">
+        <div class="slds-p-around_medium">
+            <p class="headline">Your daily academic workspace.</p>
+            <ul class="list">
+                <li>View assigned subjects</li>
+                <li>Submit attendance and leave requests</li>
+                <li>Check announcements from management</li>
+            </ul>
+            <div class="module-stack">
+                <c-leave-request-manager role="Faculty"></c-leave-request-manager>
+                <c-attendance-manager></c-attendance-manager>
+                <c-timetable-manager></c-timetable-manager>
+            </div>
+        </div>
+    </lightning-card>
+</template>

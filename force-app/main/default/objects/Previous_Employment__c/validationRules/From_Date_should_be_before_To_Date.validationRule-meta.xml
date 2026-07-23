@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>From_Date_should_be_before_To_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>From_Date__c &gt; To_Date__c</errorConditionFormula>
+    <errorMessage>From Date must be before or equal to the To Date.</errorMessage>
+</ValidationRule>

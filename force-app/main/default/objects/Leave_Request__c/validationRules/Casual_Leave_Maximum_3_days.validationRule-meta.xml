@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Casual_Leave_Maximum_3_days</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    Leave_Type__c = &quot;Casual Leave&quot;,
+    (End_Date__c - Start_Date__c) + 1 &gt; 3
+)</errorConditionFormula>
+    <errorMessage>Casual Leave cannot exceed 3 days.</errorMessage>
+</ValidationRule>
