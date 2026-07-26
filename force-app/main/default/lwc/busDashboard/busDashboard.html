@@ -1,0 +1,136 @@
+<template>
+    <lightning-card title={busData.name} icon-name="custom:custom31">
+        
+        <!-- Action Buttons (Mock) -->
+        <div slot="actions">
+            <lightning-button label="Edit Details" title="Edit" icon-name="utility:edit" onclick={handleEdit} class="slds-m-left_x-small"></lightning-button>
+        </div>
+
+        <div class="slds-p-around_medium bg-layer">
+            <template if:true={isUnderConstruction}>
+                <div class="slds-notify slds-notify_alert slds-alert_warning slds-m-bottom_medium slds-grid slds-wrap" role="alert">
+                    <div class="slds-col slds-size_1-of-1 slds-text-align_center slds-m-bottom_small">
+                        <span class="slds-assistive-text">warning</span>
+                        <span class="slds-icon_container slds-icon-utility-warning slds-m-right_x-small">
+                            <lightning-icon icon-name="utility:warning" alternative-text="Warning" size="small"></lightning-icon>
+                        </span>
+                        <h2>This Bus Dashboard is currently Under Construction</h2>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-text-align_left slds-box slds-theme_default slds-text-color_default" style="text-shadow: none;">
+                        <ul class="slds-list_dotted slds-p-left_medium">
+                            <template if:true={busName}>
+                                <li><strong>Bus Name:</strong> {busName}</li>
+                            </template>
+                            <li>
+                                <strong>Driver Status:</strong> {driverStatus}
+                            </li>
+                            <template if:true={damagedParts}>
+                                <li><strong>Damaged Parts:</strong> {damagedParts}</li>
+                            </template>
+                        </ul>
+                    </div>
+                </div>
+            </template>
+            <div class="slds-grid slds-wrap slds-gutters">
+                
+                <!-- Operations & Status Card -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-bottom_medium">
+                    <div class="slds-box slds-box_shadow slds-theme_default h-full card-hover">
+                        <div class="slds-text-heading_small slds-border_bottom slds-p-bottom_x-small slds-m-bottom_medium slds-text-title_caps">Operations Info</div>
+                        
+                        <!-- Status Section -->
+                        <div class="slds-m-bottom_large slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center slds-p-around_small bg-light slds-border_left slds-border_right slds-border_top slds-border_bottom" style="border-radius: 4px;">
+                            <div class="slds-text-title_caps slds-m-right_small slds-truncate" title="Current Status:">Current Status:</div>
+                            <div class="slds-m-top_xxx-small"><span class={statusBadgeClass}>{status}</span></div>
+                        </div>
+
+                        <!-- Working Days Section -->
+                        <div class="slds-m-bottom_medium">
+                            <div class="slds-text-title_caps slds-border_bottom slds-p-bottom_x-small slds-m-bottom_small">Weekly Working Days</div>
+                            <div class="slds-grid slds-wrap slds-gutters_xx-small">
+                                <template for:each={weekDays} for:item="day">
+                                    <div key={day.label} class="slds-col slds-grow-none slds-m-bottom_xx-small">
+                                        <span class={day.class}>{day.label}</span>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Capacity & Technical Details Card -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-bottom_medium">
+                    <div class="slds-box slds-box_shadow slds-theme_default h-full card-hover">
+                        <div class="slds-text-heading_small slds-border_bottom slds-p-bottom_x-small slds-m-bottom_medium slds-text-title_caps">Occupancy & Details</div>
+                        
+                        <!-- Seat Occupancy Section -->
+                        <div class="slds-grid slds-wrap slds-m-bottom_medium">
+                            <div class="slds-col slds-size_1-of-1">
+                                <div class="slds-box slds-theme_shade slds-text-align_center slds-p-around_small" style="border-radius: 6px;">
+                                    <div class="slds-text-title_caps slds-text-color_weak slds-m-bottom_xx-small">Seats Occupied</div>
+                                    <div class="slds-text-heading_large slds-text-color_success"><strong>{occupiedSeats}</strong> <span class="slds-text-heading_small slds-text-color_weak">/ {totalSeats}</span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Technical Information -->
+                        <div>
+                            <div class="slds-text-title_caps slds-border_bottom slds-p-bottom_x-small slds-m-bottom_small">Construction Details</div>
+                            <div class="slds-grid slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-m-bottom_small">
+                                    <div class="slds-box slds-box_x-small bg-light slds-grid slds-wrap" style="border: 1px solid #e5e5e5; border-radius: 6px;">
+                                        <div class="slds-col slds-size_1-of-1 slds-m-bottom_xx-small">
+                                            <div class="slds-text-title slds-text-color_weak slds-m-bottom_xxx-small">Vehicle</div>
+                                            <div class="slds-text-body_regular"><strong>{busData.manufacturer} {busData.model} ({busData.year})</strong></div>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-m-top_small slds-border_top slds-p-top_x-small">
+                                            <div class="slds-text-title slds-text-color_weak slds-m-bottom_xxx-small">Chassis No</div>
+                                            <div class="slds-text-body_regular"><strong>{busData.chassisNumber}</strong></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </lightning-card>
+
+    <!-- Custom Inline Edit Modal -->
+    <template if:true={isEditing}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-modal="true">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Edit Bus Details</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-record-edit-form object-api-name="Bus__c" record-id={recordId} onsuccess={handleSuccess}>
+                        <lightning-messages></lightning-messages>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Name"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="No_of_Seats_Occupied__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Total_Capacity__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-m-top_medium slds-text-align_right">
+                            <lightning-button class="slds-m-right_small" label="Cancel" onclick={closeModal}></lightning-button>
+                            <lightning-button type="submit" variant="brand" label="Save"></lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

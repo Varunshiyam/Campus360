@@ -1,0 +1,60 @@
+<template>
+    <lightning-card title="Complaint Form" icon-name="standard:feedback">
+        <div class="slds-p-around_medium">
+            <lightning-input 
+                type="text" 
+                label="Student Name" 
+                name="studentName" 
+                value={studentName} 
+                onchange={handleChange} 
+                required>
+            </lightning-input>
+
+            <lightning-input 
+                type="date" 
+                label="Date" 
+                name="complaintDate" 
+                value={complaintDate} 
+                onchange={handleChange} 
+                required>
+            </lightning-input>
+
+            <lightning-input 
+                type="text" 
+                label="Bus" 
+                name="bus" 
+                value={bus} 
+                onchange={handleChange} 
+                required>
+            </lightning-input>
+
+            <lightning-combobox
+                name="complaintType"
+                label="Complaint Type"
+                value={complaintType}
+                placeholder="Select Complaint Type"
+                options={typeOptions}
+                onchange={handleChange}
+                required>
+            </lightning-combobox>
+
+            <lightning-textarea 
+                label="Complaint Details" 
+                name="complaint" 
+                value={complaint} 
+                onchange={handleChange} 
+                required>
+            </lightning-textarea>
+
+            <div class="slds-m-top_medium">
+                <lightning-button 
+                    variant="brand" 
+                    label="Submit Complaint" 
+                    title="Submit Complaint" 
+                    onclick={handleSubmit} 
+                    class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>
