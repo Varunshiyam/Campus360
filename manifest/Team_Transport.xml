@@ -17,6 +17,8 @@
         <members>Leave__c</members>
         <members>Student__c</members>
         <members>Under_Construction__c</members>
+        <members>Maintenance_Dashboard__c</members>
+        <members>Bus_Pass__c</members>
         <name>CustomObject</name>
     </types>
 
@@ -30,6 +32,7 @@
         <members>Event_Staff_Auto_Assignment_Flow</members>
         <name>Flow</name>
     </types>
+    
 
     <!-- Reports -->
     <types>
