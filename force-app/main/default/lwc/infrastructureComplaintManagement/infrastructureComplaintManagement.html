@@ -1,0 +1,120 @@
+<template>
+
+    <lightning-card>
+
+        <div class="container">
+
+            <!-- Header -->
+            <div class="header">
+
+                <lightning-icon
+                    icon-name="utility:warning"
+                    size="medium"
+                    class="icon">
+                </lightning-icon>
+
+                <div>
+                    <h1>Infrastructure Complaint</h1>
+                    <p>Register a new infrastructure complaint</p>
+                </div>
+
+            </div>
+
+            <hr/>
+
+            <lightning-record-edit-form
+                object-api-name="Infrastructure_Complaint__c"
+                onsuccess={handleSuccess}>
+
+                <div class="slds-grid slds-wrap">
+
+                    <!-- Complaint Raised -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Complaint_Raised__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Name__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Email_ID__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Phone_Number__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Block -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Block__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Floor -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Floor__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Issue -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Issue__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Issue Place -->
+                    <div class="slds-col slds-size_1-of-2 field">
+                        <lightning-input-field
+                            field-name="Issue_Place__c">
+                        </lightning-input-field>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="slds-col slds-size_1-of-1 field">
+                        <lightning-input-field
+                            field-name="Description__c">
+                        </lightning-input-field>
+                    </div>
+
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-section">
+
+                    <lightning-button
+                        label="Reset"
+                        type="reset"
+                        variant="neutral">
+                    </lightning-button>
+
+                    <lightning-button
+                        label="Submit Complaint"
+                        type="submit"
+                        variant="brand"
+                        class="submit-btn">
+                    </lightning-button>
+
+                </div>
+
+            </lightning-record-edit-form>
+
+        </div>
+
+    </lightning-card>
+
+</template>
