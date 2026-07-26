@@ -1,0 +1,158 @@
+<template>
+    <lightning-card title="Staff Directory" icon-name="standard:user">
+        
+        <div class="slds-p-around_medium bg-layer">
+            <!-- Iterate over Staff List -->
+            <template for:each={staffList} for:item="staff">
+                <div key={staff.Id} class="slds-box slds-box_shadow slds-theme_default slds-m-bottom_large" style="background: white; border-radius: 8px;">
+                    
+                    <div class="slds-grid slds-wrap slds-gutters">
+                        
+                        <!-- Staff Profile Card (Left) -->
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-bottom_medium">
+                            <div class="slds-box slds-theme_default h-full card-hover" style="border: none; box-shadow: none;">
+                                <div class="slds-grid slds-grid_align-spread slds-border_bottom slds-p-bottom_x-small slds-m-bottom_medium">
+                                    <div class="slds-text-heading_small slds-text-title_caps">Staff Profile</div>
+                                    <lightning-button-icon icon-name="utility:edit" variant="bare" title="Edit Profile" alternative-text="Edit Profile" data-id={staff.Id} onclick={handleEditProfile}></lightning-button-icon>
+                                </div>
+                                
+                                <!-- Staff Profile & Status Section -->
+                                <div class="slds-m-bottom_medium slds-p-around_small bg-light slds-grid slds-wrap slds-grid_align-spread slds-grid_vertical-align-center" style="border-radius: 4px; border: 1px solid #e5e5e5;">
+                                    <div class="slds-media slds-media_center slds-m-bottom_xxx-small slds-m-right_small" style="max-width: 100%; min-width: 0;">
+                                        <div class="slds-media__figure">
+                                            <lightning-icon icon-name="standard:user" size="large"></lightning-icon>
+                                        </div>
+                                        <div class="slds-media__body" style="overflow: hidden;">
+                                            <div class="slds-text-heading_medium slds-truncate" title={staff.name}><strong>{staff.name}</strong></div>
+                                            <div class="slds-text-color_weak slds-truncate" title={staff.staffId}>ID: {staff.staffId}</div>
+                                        </div>
+                                    </div>
+                                    <div class="slds-m-top_xxx-small slds-shrink-none">
+                                        <span class={staff.staffStatusBadgeClass}>{staff.status}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Staff Information -->
+                                <div class="slds-grid slds-wrap slds-m-top_medium">
+                                    <div class="slds-col slds-size_1-of-4 slds-p-right_x-small slds-m-bottom_small">
+                                        <div class="slds-text-title slds-text-color_weak slds-m-bottom_xx-small">License</div>
+                                        <div class="slds-text-body_regular slds-truncate" title={staff.license}><strong>{staff.license}</strong></div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 slds-p-horizontal_x-small slds-m-bottom_small">
+                                        <div class="slds-text-title slds-text-color_weak slds-m-bottom_xx-small">Experience</div>
+                                        <div class="slds-text-body_regular slds-truncate" title={staff.experience}><strong>{staff.experience}</strong></div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 slds-p-horizontal_x-small slds-m-bottom_small">
+                                        <div class="slds-text-title slds-text-color_weak slds-m-bottom_xx-small">Contact Number</div>
+                                        <div class="slds-text-body_regular slds-truncate" title={staff.contactNum}><strong>{staff.contactNum}</strong></div>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 slds-p-left_x-small slds-m-bottom_small">
+                                        <div class="slds-text-title slds-text-color_weak slds-m-bottom_xx-small">Email</div>
+                                        <div class="slds-text-body_regular slds-truncate" title={staff.email}><strong><a href="mailto:{staff.email}">{staff.email}</a></strong></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Leave & Attendance Card (Right) -->
+                        <div class="slds-col slds-size_1-of-1 slds-large-size_1-of-2 slds-p-bottom_medium">
+                            <div class="slds-box slds-theme_default h-full card-hover" style="border: none; box-shadow: none;">
+                                <div class="slds-text-heading_small slds-border_bottom slds-p-bottom_x-small slds-m-bottom_medium slds-text-title_caps">Leave & Attendance</div>
+                                
+                                <template if:true={staff.hasLeaveDetails}>
+                                    <div class="slds-grid slds-wrap slds-p-top_small">
+                                        <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium">
+                                            <div class="slds-box slds-theme_shade slds-text-align_center slds-p-around_small" style="border-radius: 6px;">
+                                                <div class="slds-text-title_caps slds-text-color_weak slds-m-bottom_xx-small">Total Leaves</div>
+                                                <div class="slds-text-heading_large slds-text-color_error"><strong>{staff.leaveCount}</strong></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="slds-col slds-size_1-of-2 slds-p-right_x-small">
+                                            <div class="slds-box slds-box_x-small slds-text-align_center bg-light" style="border: 1px solid #e5e5e5; border-radius: 6px;">
+                                                <div class="slds-text-title slds-text-color_weak slds-m-bottom_xx-small">Start Date</div>
+                                                <div class="slds-text-heading_small slds-text-color_default">
+                                                    <template if:true={staff.leaveStartDate}><strong>{staff.leaveStartDate}</strong></template>
+                                                    <template if:false={staff.leaveStartDate}><strong>-</strong></template>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-col slds-size_1-of-2 slds-p-left_x-small">
+                                            <div class="slds-box slds-box_x-small slds-text-align_center bg-light" style="border: 1px solid #e5e5e5; border-radius: 6px;">
+                                                <div class="slds-text-title slds-text-color_weak slds-m-bottom_xx-small">End Date</div>
+                                                <div class="slds-text-heading_small slds-text-color_default">
+                                                    <template if:true={staff.leaveEndDate}><strong>{staff.leaveEndDate}</strong></template>
+                                                    <template if:false={staff.leaveEndDate}><strong>-</strong></template>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <template if:false={staff.hasLeaveDetails}>
+                                    <div class="slds-text-align_center slds-p-around_large slds-m-top_large">
+                                        <lightning-icon icon-name="utility:event" size="large" class="slds-m-bottom_medium" variant="inverse" style="opacity: 0.3;"></lightning-icon>
+                                        <h3 class="slds-text-heading_small slds-m-bottom_xx-small">No active leaves</h3>
+                                        <p class="slds-text-body_regular slds-text-color_weak">Staff member is currently active with no leaves scheduled.</p>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div slot="footer" class="slds-p-around_small slds-text-align_center slds-border_top">
+            <lightning-button label="See More Staff Details" title="See More Staff Details" variant="base" icon-name="utility:forward" icon-position="right" onclick={handleSeeMore}></lightning-button>
+        </div>
+    </lightning-card>
+
+    <!-- Custom Inline Edit Modal -->
+    <template if:true={isEditing}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-modal="true">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium slds-hyphenate">Edit Staff Profile</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <!-- Bind to editRecordId instead of recordId -->
+                    <lightning-record-edit-form object-api-name="Staff__c" record-id={editRecordId} onsuccess={handleSuccess}>
+                        <lightning-messages></lightning-messages>
+                        <div class="slds-grid slds-wrap slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Name__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Status__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Contact_Number__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Email__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="Licensenum__c"></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <lightning-input-field field-name="experience__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <div class="slds-m-top_medium slds-text-align_right">
+                            <lightning-button class="slds-m-right_small" label="Cancel" onclick={closeModal}></lightning-button>
+                            <lightning-button type="submit" variant="brand" label="Save"></lightning-button>
+                        </div>
+                    </lightning-record-edit-form>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
