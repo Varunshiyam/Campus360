@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Approver_Principal__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Approver Principal</label>
+    <referenceTo>Principal__c</referenceTo>
+    <relationshipLabel>Approvals Assigned</relationshipLabel>
+    <relationshipName>Approvals_Assigned_Principal</relationshipName>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

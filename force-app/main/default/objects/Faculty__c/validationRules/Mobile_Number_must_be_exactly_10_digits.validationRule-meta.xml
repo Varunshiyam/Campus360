@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Mobile_Number_must_be_exactly_10_digits</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(
+REGEX(
+Mobile__c,
+&quot;^[6-9][0-9]{9}$&quot;
+)
+)</errorConditionFormula>
+    <errorMessage>Enter a valid 10-digit mobile number.</errorMessage>
+</ValidationRule>

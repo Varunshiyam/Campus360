@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="HOD Dashboard" icon-name="standard:leaderboard">
+        <div class="slds-p-around_medium">
+            <p class="headline">Department insights and approvals.</p>
+            <ul class="list">
+                <li>Monitor faculty attendance</li>
+                <li>Approve workload changes</li>
+                <li>Coordinate timetable updates</li>
+            </ul>
+            <div class="module-stack">
+                <c-leave-request-manager role="HOD"></c-leave-request-manager>
+                <c-attendance-manager></c-attendance-manager>
+                <c-timetable-manager></c-timetable-manager>
+            </div>
+        </div>
+    </lightning-card>
+</template>
