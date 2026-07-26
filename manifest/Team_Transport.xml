@@ -32,7 +32,22 @@
         <members>Event_Staff_Auto_Assignment_Flow</members>
         <name>Flow</name>
     </types>
-    
+    <!-- LWC-->
+     <types>
+        <members>busDashboard</members>
+        <members>complaintForm</members>
+        <members>eventDashboard</members>
+        <members>leaveForm</members>
+        <members>staffDashboard</members>
+        <name>LightningComponentBundle</name>
+    </types>
+    <types>
+    <members>Complaint_Form</members>
+    <members>Event_Form1</members>
+    <members>leave_form</members>
+    <members>Transport_Dashboard</members>
+    <name>FlexiPage</name>
+</types>
 
     <!-- Reports -->
     <types>

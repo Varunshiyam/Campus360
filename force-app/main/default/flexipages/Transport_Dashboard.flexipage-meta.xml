@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlexiPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>busName</name>
+                    <value>Campus Express - Route A</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>damagedParts</name>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>driverStatus</name>
+                    <value>Available</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>isStaffAvailable</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>status</name>
+                    <value>Under Construction</value>
+                </componentInstanceProperties>
+                <componentName>busDashboard</componentName>
+                <identifier>c_busDashboard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentName>staffDashboard</componentName>
+                <identifier>c_staffDashboard</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>main</name>
+        <type>Region</type>
+    </flexiPageRegions>
+    <masterLabel>Transport Dashboard</masterLabel>
+    <template>
+        <name>flexipage:defaultAppHomeTemplate</name>
+    </template>
+    <type>AppPage</type>
+</FlexiPage>
