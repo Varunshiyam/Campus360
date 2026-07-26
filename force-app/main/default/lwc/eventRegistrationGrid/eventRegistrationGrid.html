@@ -1,0 +1,164 @@
+<template>
+    <div class="page-container">
+        <!-- TOP NAVIGATION STEPPER -->
+        <div class="stepper-container">
+            <ul class="stepper">
+                <li class="step active"><div class="step-num">1</div><span class="step-label">Welcome</span></li>
+                <li class="step"><div class="step-num">2</div><span class="step-label">Tour Platform</span></li>
+                <li class="step"><div class="step-num">3</div><span class="step-label">Browse Events</span></li>
+                <li class="step"><div class="step-num">4</div><span class="step-label">Register</span></li>
+                <li class="step"><div class="step-num">5</div><span class="step-label">Approval</span></li>
+                <li class="step"><div class="step-num">6</div><span class="step-label">Feedback</span></li>
+                <li class="step"><div class="step-num">7</div><span class="step-label">Certificate</span></li>
+                <li class="step"><div class="step-num">8</div><span class="step-label">Summary</span></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <!-- HERO BANNER -->
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <h1>Welcome to your ✨<br><span class="hero-highlight">Event Management<br>Platform Free Trial</span> ✨</h1>
+                </div>
+                <div class="hero-image"></div>
+            </div>
+
+            <!-- TAGLINE -->
+            <div class="tagline">
+                Innovate fast, deploy securely, and protect your data.
+            </div>
+
+            <!-- INFO CONTAINER -->
+            <div class="info-container">
+                <p class="info-intro">Welcome to your free trial! The Event Management Platform is your unified platform to build, customize, and deploy powerful events and registrations on Salesforce.</p>
+                
+                <p class="info-desc">Salesforce's built in agent and application lifecycle management and governance tools help you build with confidence. Leverage the full power of Salesforce data and metadata; automate intelligent workflows; manage deployments securely; and keep your org, data, and agents secure.</p>
+
+                <div class="info-box border-orange">
+                    <p>With this free trial, you get hands-on access to <strong>Event Builder, Event Registration, Participant Management, and Event Monitoring</strong>, giving you everything you need to innovate fast, deploy securely, and protect your data on Salesforce.</p>
+                </div>
+
+                <div class="info-box border-yellow">
+                    <p>You will complete these workshop steps in one of the two orgs you received—you get two separate password reset emails. Use one org as your main org and the other as your target org.</p>
+                </div>
+
+                <div class="info-box border-purple bg-light-purple">
+                    <div class="purple-box-header">
+                        <lightning-icon icon-name="utility:setup" size="x-small"></lightning-icon>
+                        <strong>Want to explore apps in this org? Enable the following settings first:</strong>
+                    </div>
+                    <ul class="purple-list">
+                        <li>
+                            <strong>Enable Salesforce Multi-Framework</strong><br>
+                            <span class="text-gray">Go to: <em>Setup → React Development with Salesforce Multi-Framework (Beta)</em></span><br>
+                            <span class="text-gray">Turn on: <strong>Salesforce Multi-Framework → Enable Beta</strong></span>
+                        </li>
+                        <li>
+                            <strong>Enable Digital Experiences</strong><br>
+                            <span class="text-gray">Go to: <em>Setup → Digital Experiences → Settings</em></span><br>
+                            <span class="text-gray">Turn on: <strong>Enable Digital Experiences</strong></span>
+                        </li>
+                        <li>
+                            <strong>Enable Salesforce CMS MCP access</strong><br>
+                            <span class="text-gray">Go to: <em>Setup → Digital Experiences → Salesforce CMS</em></span><br>
+                            <span class="text-gray">Turn on: <strong>Access the Content Read-Only MCP Server and Tools (Beta)</strong></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- TWO COLUMN LAYOUT -->
+            <div class="columns-container">
+                <!-- LEFT COLUMN -->
+                <div class="left-column">
+                    <div class="dark-card">
+                        <div class="dark-card-header">
+                            <lightning-icon icon-name="standard:event" size="small" variant="inverse" class="dark-card-icon"></lightning-icon>
+                            <h3>Use Case: Connected Executive Education</h3>
+                        </div>
+                        <div class="dark-card-content">
+                            <p>Connected Executive Education (or CEE for short) is a fictitious company that delivers executive training courses to individuals and businesses around the world. CEE uses the Event Management Platform to streamline and modernize their executive learning programs with intelligent apps.</p>
+                            <p>CEE built this custom application on Salesforce to manage enrollments.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN (EVENTS TABLE) -->
+                <div class="right-column">
+                    <div class="light-card">
+                        <div class="events-header">
+                            <div class="cee-logo">
+                                <lightning-icon icon-name="custom:custom55" size="medium"></lightning-icon>
+                                <span>CONNECTED<br>EXECUTIVE<br>EDUCATION</span>
+                            </div>
+                            <lightning-input type="search" placeholder="Search in courses, email, names..." variant="label-hidden" class="events-search"></lightning-input>
+                        </div>
+                        
+                        <div class="events-table-container">
+                            <div class="table-header">
+                                <h2>COURSE ENROLLMENTS</h2>
+                                <p>Most recent enrollments with progress</p>
+                            </div>
+                            
+                            <!-- SPINNER -->
+                            <template if:true={isLoading}>
+                                <div class="spinner-container">
+                                    <lightning-spinner alternative-text="Loading Events" size="small"></lightning-spinner>
+                                </div>
+                            </template>
+
+                            <!-- EVENT LIST -->
+                            <template if:false={isLoading}>
+                                <template if:true={hasEvents}>
+                                    <div class="table-responsive">
+                                        <table class="events-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>EVENT NAME</th>
+                                                    <th>STATUS</th>
+                                                    <th>DATES</th>
+                                                    <th>SEATS</th>
+                                                    <th>ACTION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={events} for:item="event">
+                                                    <tr key={event.Id}>
+                                                        <td class="td-name">
+                                                            <div class="name-wrapper">
+                                                                <lightning-icon icon-name="standard:event" size="small" class="td-icon"></lightning-icon>
+                                                                <span class="event-name-text" title={event.Name}>{event.Name}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="td-status">
+                                                            <span class={event.statusClass}>{event.Status__c}</span>
+                                                        </td>
+                                                        <td class="td-date">{event.formattedTime}</td>
+                                                        <td class="td-seats">
+                                                            <div class="progress-wrapper">
+                                                                <div class="progress-bar-container">
+                                                                    <div class="progress-bar" style={event.progressStyle}></div>
+                                                                </div>
+                                                                <span class="seats-text">{event.Available_Seats__c}/{event.Capacity__c}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="td-action">
+                                                            <button class="btn-register" disabled={event.isFull} data-id={event.Id} onclick={handleRegister}>{event.buttonLabel}</button>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </template>
+                                <template if:false={hasEvents}>
+                                    <div class="no-events-small">No events found.</div>
+                                </template>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

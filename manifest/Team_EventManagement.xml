@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <!-- Apex Classes -->
+    <types>
+        <members>EventRegistrationController</members>
+        <members>EventRegistrationControllerTest</members>
+        <members>EventTriggerHandler</members>
+        <members>EventTriggerTest</members>
+        <members>RegistrationTriggerHandler</members>
+        <members>RegistrationTriggerTest</members>
+        <name>ApexClass</name>
+    </types>
+
+    <!-- Apex Triggers -->
+    <types>
+        <members>EventTrigger</members>
+        <members>RegistrationTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+
+    <!-- Lightning Web Components -->
+    <types>
+        <members>eventManagementDashboard</members>
+        <members>eventRegistrationGrid</members>
+        <name>LightningComponentBundle</name>
+    </types>
+
+
+    <!-- Flows -->
+    <!-- Flows -->
+<types>
+    <members>Attendance_Flow</members>
+    <members>Certificate_Flow</members>
+    <members>Event_Approval_Flow</members>
+    <members>Feedback_Flow</members>
+    <members>Feedback_Submit_flow</members>
+    <members>Payment_Flow</members>
+    <members>Prevent_Duplicate_Registration</members>
+    <members>registration</members>
+    <members>Registration_Successful_Flow</members>
+    <members>Volunteer_Assignment_Flow</members>
+    <name>Flow</name>
+</types>
+
+    <!-- Custom Objects -->
+    <types>
+        <members>Attendance__c</members>
+        <members>Certificate__c</members>
+        <members>Department__c</members>
+        <members>Event__c</members>
+        <members>Feedback__c</members>
+        <members>Judge__c</members>
+        <members>Participant__c</members>
+        <members>PaymentV1__c</members>
+        <members>Registration__c</members>
+        <members>Resource__c</members>
+        <members>Venue__c</members>
+        <members>Volunteer_Assigment__c</members>
+        <members>Winner__c</members>
+        <name>CustomObject</name>
+    </types>
+
+
+
+
+
+
+    <!-- Page Layouts -->
+
+ 
+
+
+ 
+
+
+
+
+    <version>67.0</version>
+
+</Package>

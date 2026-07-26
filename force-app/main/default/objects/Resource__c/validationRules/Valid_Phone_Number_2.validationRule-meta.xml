@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Valid_Phone_Number_2</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(
+    Contact_Number_2__c &lt; 6000000000,
+    Contact_Number_2__c &gt; 9999999999
+)</errorConditionFormula>
+    <errorMessage>Phone number must contain exactly 10 digits.</errorMessage>
+</ValidationRule>
