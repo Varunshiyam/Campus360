@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Available_Copies_cannot_exceed_TotalCopy</fullName>
+    <active>true</active>
+    <errorConditionFormula>Available_Copies__c  &gt; Total_Copies__c</errorConditionFormula>
+    <errorDisplayField>Available_Copies__c</errorDisplayField>
+    <errorMessage>Available Copies cannot exceed Total Copies.</errorMessage>
+</ValidationRule>

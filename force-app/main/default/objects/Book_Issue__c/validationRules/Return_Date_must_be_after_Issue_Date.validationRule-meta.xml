@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Return_Date_must_be_after_Issue_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>Return_Date__c  &lt;  Issue_Date__c</errorConditionFormula>
+    <errorDisplayField>Actual_Return_Date__c</errorDisplayField>
+    <errorMessage>Return Date must be after Issue Date</errorMessage>
+</ValidationRule>
