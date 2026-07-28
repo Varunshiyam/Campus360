@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Email_Validation</fullName>
+    <active>true</active>
+    <errorConditionFormula>NOT(
+REGEX(
+Email__c,
+&quot;^[A-Za-z0-9._%+-]+@college\\.edu$&quot;
+)
+)</errorConditionFormula>
+    <errorMessage>Only use college email for work</errorMessage>
+</ValidationRule>

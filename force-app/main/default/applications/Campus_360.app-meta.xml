@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Campus360 application for managing courses, students, enrollments, and department heads.</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
+    <label>Campus 360</label>
+    <navType>Standard</navType>
+    <tabs>Free_Trial_Guide</tabs>
+    <tabs>Learning_Management</tabs>
+    <tabs>Course__c</tabs>
+    <tabs>Student__c</tabs>
+    <tabs>Enrollment__c</tabs>
+    <tabs>HOD__c</tabs>
+    <tabs>Announcement__c</tabs>
+    <tabs>Attendance__c</tabs>
+    <tabs>Faculty_Attendance__c</tabs>
+    <tabs>Faculty_Timetable__c</tabs>
+    <tabs>Leave_Request__c</tabs>
+    <tabs>Previous_Employment__c</tabs>
+    <tabs>Principal__c</tabs>
+    <tabs>Subject__c</tabs>
+    <tabs>Timetable__c</tabs>
+    <uiType>Lightning</uiType>
+</CustomApplication>

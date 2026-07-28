@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Remarks_mandatory_if_Absent</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+    Status__c = &quot;Absent&quot;,
+    ISBLANK(Remarks__c)
+)</errorConditionFormula>
+    <errorMessage>Remarks are required when the attendance status is Absent.</errorMessage>
+</ValidationRule>
