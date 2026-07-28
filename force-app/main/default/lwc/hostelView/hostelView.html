@@ -1,0 +1,34 @@
+<template>
+    <div class="view-content-anim">
+        <div class="custom-card">
+            <div class="card-header">
+                <div class="header-left">
+                    <lightning-icon icon-name="standard:company" size="small"></lightning-icon>
+                    <h2>Hostel Blocks & Infrastructure</h2>
+                    <span class="slds-badge slds-theme_success">Blocks: {hostels.length}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <template if:true={hostels.length}>
+                    <div class="hostel-grid">
+                        <template for:each={hostels} for:item="h">
+                            <div key={h.Id} class="hostel-card">
+                                <div class="hostel-card-header">
+                                    <h3>{h.Name}</h3>
+                                    <span class="slds-badge slds-theme_info">{h.Hostel_Type__c}</span>
+                                </div>
+                                <div class="hostel-meta">
+                                    <p><strong>Warden:</strong> {h.Warden__c}</p>
+                                    <p><strong>Total Floors:</strong> {h.Total_Floors__c}</p>
+                                    <p><strong>Total Rooms:</strong> {h.Total_Rooms__c}</p>
+                                    <p><strong>Available Rooms:</strong> {h.Available_Rooms__c}</p>
+                                    <p><strong>Location:</strong> {h.Address__c}</p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

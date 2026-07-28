@@ -1,0 +1,54 @@
+<template>
+    <div class="view-content-anim">
+        <div class="custom-card">
+            <div class="card-header">
+                <div class="header-left">
+                    <lightning-icon icon-name="utility:people" size="small"></lightning-icon>
+                    <h2>Student Directory</h2>
+                    <span class="slds-badge slds-theme_success">Total Students: {students.length}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="search-bar">
+                    <lightning-input
+                        type="search"
+                        placeholder="Search student name, reg number, department..."
+                        value={searchTerm}
+                        onchange={handleSearch}
+                    ></lightning-input>
+                </div>
+
+                <template if:true={filteredStudents.length}>
+                    <div class="table-responsive">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Register No</th>
+                                    <th>Student Name</th>
+                                    <th>Department</th>
+                                    <th>Year</th>
+                                    <th>Gender</th>
+                                    <th>Room No</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={filteredStudents} for:item="s">
+                                    <tr key={s.id}>
+                                        <td><strong>{s.regNumber}</strong></td>
+                                        <td>{s.name}</td>
+                                        <td>{s.department}</td>
+                                        <td>{s.year}</td>
+                                        <td>{s.gender}</td>
+                                        <td>{s.roomNumber}</td>
+                                        <td><span class="status-pill status-checked-in">{s.hostelStatus}</span></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

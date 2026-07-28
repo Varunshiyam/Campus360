@@ -1,0 +1,46 @@
+<template>
+    <div class="view-content-anim">
+        <div class="custom-card">
+            <div class="card-header">
+                <div class="header-left">
+                    <lightning-icon icon-name="utility:groups" size="small"></lightning-icon>
+                    <h2>Gate Visitors Registry</h2>
+                    <span class="slds-badge slds-theme_info">Total: {visitors.length}</span>
+                </div>
+                <button class="slds-button slds-button_brand" onclick={handleNewVisitor}>+ Register Visitor</button>
+            </div>
+            <div class="card-body">
+                <template if:true={visitors.length}>
+                    <div class="table-responsive">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Visitor Name</th>
+                                    <th>Student Visited</th>
+                                    <th>Relation</th>
+                                    <th>Phone Number</th>
+                                    <th>Check-in Time</th>
+                                    <th>Purpose</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={visitors} for:item="v">
+                                    <tr key={v.id}>
+                                        <td><strong>{v.name}</strong></td>
+                                        <td>{v.studentName}</td>
+                                        <td>{v.relation}</td>
+                                        <td>{v.phone}</td>
+                                        <td>{v.checkInTime}</td>
+                                        <td>{v.purpose}</td>
+                                        <td><span class={v.statusClass}>{v.statusLabel}</span></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

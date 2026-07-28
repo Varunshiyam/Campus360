@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Limit_Advance_Booking</fullName>
+    <active>true</active>
+    <description>Students can book meals only up to 2 days in advance.</description>
+    <errorConditionFormula>Meal_Date__c &gt; TODAY() + 2</errorConditionFormula>
+    <errorDisplayField>Meal_Date__c</errorDisplayField>
+    <errorMessage>Food tokens can only be booked up to 2 days in advance.</errorMessage>
+</ValidationRule>

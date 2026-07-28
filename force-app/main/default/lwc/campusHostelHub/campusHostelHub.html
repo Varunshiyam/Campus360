@@ -1,0 +1,434 @@
+<template>
+    <div class="app-wrapper">
+        <!-- Global Loading Spinner -->
+        <template if:true={isLoading}>
+            <lightning-spinner alternative-text="Loading Hostel Hub..." size="medium" variant="brand"></lightning-spinner>
+        </template>
+
+        <!-- 1. Left Fixed Navigation Sidebar (280px) -->
+        <aside class={sidebarClass}>
+            <div class="sidebar-brand">
+                <div class="brand-info">
+                    <div class="brand-icon">
+                        <lightning-icon icon-name="utility:home" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <div class="brand-text-group">
+                        <div class="brand-title">Campus 360</div>
+                        <div class="brand-subtitle">Smart Hostel Hub</div>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick={toggleSidebar} title="Toggle Sidebar">
+                    <lightning-icon icon-name="utility:chevrondown" size="x-small" variant="inverse"></lightning-icon>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <template for:each={navItems} for:item="item">
+                    <div
+                        key={item.id}
+                        class={item.class}
+                        data-nav={item.id}
+                        onclick={handleNavSelect}
+                    >
+                        <lightning-icon icon-name={item.icon} size="small" variant="inverse"></lightning-icon>
+                        <span class="nav-label">{item.label}</span>
+                    </div>
+                </template>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-profile-badge">
+                    <div class="user-avatar">SA</div>
+                    <div class="user-text-group">
+                        <div class="user-name">System Admin</div>
+                        <div class="user-role">Hostel Manager</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 2. Main SPA Layout Area -->
+        <main class="app-main">
+            <!-- Sticky Top Header -->
+            <header class="top-header">
+                <div class="header-title-group">
+                    <h1>{viewTitle}</h1>
+                </div>
+
+                <div class="header-right-actions">
+                    <span class="status-badge">
+                        <span class="status-dot"></span> Salesforce Org Connected
+                    </span>
+
+                    <button class="slds-button slds-button_brand" onclick={openComplaintModal}>
+                        + Complaint
+                    </button>
+                    <button class="slds-button slds-button_success" onclick={openFoodTokenModal}>
+                        + Issue Token
+                    </button>
+                    <button class="slds-button slds-button_neutral" onclick={openVisitorModal}>
+                        + Visitor
+                    </button>
+                    <button class="slds-button slds-button_icon slds-button_icon-border-filled" title="Refresh Data" onclick={handleRefresh} disabled={isRefreshing}>
+                        <lightning-icon icon-name="utility:refresh" size="small"></lightning-icon>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Scrollable Main View Content Area -->
+            <div class="view-container">
+                <template if:true={isViewLoading}>
+                    <lightning-spinner alternative-text="Switching View..." size="small" variant="brand"></lightning-spinner>
+                </template>
+
+                <template if:false={isViewLoading}>
+                    <!-- 1. Dashboard Child Component -->
+                    <template if:true={isDashboardView}>
+                        <c-dashboard-view
+                            summary={summary}
+                            complaints={complaints}
+                            room-summaries={roomSummaries}
+                            food-tokens={foodTokens}
+                            visitors={visitors}
+                            leaves={leaves}
+                            fee-pending-list={feePendingList}
+                            onopencomplaint={openComplaintModal}
+                            onopenfoodtoken={openFoodTokenModal}
+                            onopenvisitor={openVisitorModal}
+                            onresolve={handleResolveComplaint}
+                        ></c-dashboard-view>
+                    </template>
+
+                    <!-- 2. Students Child Component -->
+                    <template if:true={isStudentsView}>
+                        <c-student-view students={studentsList}></c-student-view>
+                    </template>
+
+                    <!-- 3. Hostels Child Component -->
+                    <template if:true={isHostelsView}>
+                        <c-hostel-view hostels={hostelsList}></c-hostel-view>
+                    </template>
+
+                    <!-- 4. Rooms Child Component -->
+                    <template if:true={isRoomsView}>
+                        <c-room-view rooms={roomsList} hostels={hostelsList}></c-room-view>
+                    </template>
+
+                    <!-- 5. Bed Allocations View -->
+                    <template if:true={isBedAllocationsView}>
+                        <div class="view-content-anim">
+                            <div class="custom-card">
+                                <div class="card-header">
+                                    <div class="header-left">
+                                        <lightning-icon icon-name="utility:layers" size="small"></lightning-icon>
+                                        <h2>Bed Allocation Register</h2>
+                                        <span class="slds-badge slds-theme_success">Allocated: {bedAllocations.length}</span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Allocation ID</th>
+                                                    <th>Student</th>
+                                                    <th>Hostel Block</th>
+                                                    <th>Room No</th>
+                                                    <th>Bed No</th>
+                                                    <th>Allocation Date</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <template for:each={bedAllocations} for:item="ba">
+                                                    <tr key={ba.id}>
+                                                        <td><strong>{ba.name}</strong></td>
+                                                        <td>{ba.studentName}</td>
+                                                        <td>{ba.hostelName}</td>
+                                                        <td>{ba.roomNumber}</td>
+                                                        <td>{ba.bedNumber}</td>
+                                                        <td>{ba.allocationDate}</td>
+                                                        <td><span class="status-pill status-allocated">{ba.status}</span></td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- 6. Complaints Child Component -->
+                    <template if:true={isComplaintsView}>
+                        <c-complaint-view
+                            complaints={complaints}
+                            onnewcomplaint={openComplaintModal}
+                            onresolve={handleResolveComplaint}
+                        ></c-complaint-view>
+                    </template>
+
+                    <!-- 7. Food Tokens Child Component -->
+                    <template if:true={isFoodTokensView}>
+                        <c-food-token-view
+                            tokens={foodTokens}
+                            onnewtoken={openFoodTokenModal}
+                        ></c-food-token-view>
+                    </template>
+
+                    <!-- 8. Visitors Child Component -->
+                    <template if:true={isVisitorsView}>
+                        <c-visitor-view
+                            visitors={visitors}
+                            onnewvisitor={openVisitorModal}
+                        ></c-visitor-view>
+                    </template>
+
+                    <!-- 9. Fee Child Component -->
+                    <template if:true={isHostelFeesView}>
+                        <c-fee-view fees={feePendingList}></c-fee-view>
+                    </template>
+
+                    <!-- 10. Leave Requests Child Component -->
+                    <template if:true={isLeaveRequestsView}>
+                        <c-leave-view leaves={leaves}></c-leave-view>
+                    </template>
+
+                    <!-- 11. Attendance Child Component -->
+                    <template if:true={isAttendanceView}>
+                        <c-attendance-view attendance={attendanceList}></c-attendance-view>
+                    </template>
+
+                    <!-- 12. Settings View -->
+                    <template if:true={isSettingsView}>
+                        <div class="view-content-anim">
+                            <div class="custom-card">
+                                <div class="card-header">
+                                    <div class="header-left">
+                                        <lightning-icon icon-name="utility:settings" size="small"></lightning-icon>
+                                        <h2>System Configuration & Preferences</h2>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="settings-grid">
+                                        <div class="settings-box">
+                                            <h3>Salesforce Connected Org</h3>
+                                            <p>Connected to <strong>flowganru6dfb3592@platformfreetrial.demo</strong></p>
+                                            <span class="slds-badge slds-theme_success">API Status: Active (v67.0)</span>
+                                        </div>
+                                        <div class="settings-box">
+                                            <h3>Mess Timing Configuration</h3>
+                                            <p>Breakfast: 07:30 AM - 09:00 AM</p>
+                                            <p>Lunch: 12:30 PM - 02:00 PM</p>
+                                            <p>Dinner: 07:30 PM - 09:00 PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </main>
+
+        <!-- ULTRA SAAS MODALS -->
+        <template if:true={isComplaintModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="modal-close-btn" title="Close" onclick={closeComplaintModal}>✕</button>
+                        <h2 class="modal-header-title">Log New Student Complaint</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium custom-modal-body">
+                        <div class="form-field">
+                            <label class="form-label required">Select Student</label>
+                            <lightning-combobox
+                                name="student"
+                                variant="label-hidden"
+                                value={selectedStudentId}
+                                options={studentOptions}
+                                data-field="student"
+                                onchange={handleFieldChange}
+                                required
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label">Issue Category</label>
+                            <lightning-combobox
+                                name="category"
+                                variant="label-hidden"
+                                value={complaintCategory}
+                                options={categoryOptions}
+                                data-field="category"
+                                onchange={handleFieldChange}
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label">Priority</label>
+                            <lightning-combobox
+                                name="priority"
+                                variant="label-hidden"
+                                value={complaintPriority}
+                                options={priorityOptions}
+                                data-field="priority"
+                                onchange={handleFieldChange}
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label required">Detailed Description</label>
+                            <lightning-textarea
+                                name="description"
+                                variant="label-hidden"
+                                value={complaintDescription}
+                                data-field="description"
+                                onchange={handleFieldChange}
+                                placeholder="Describe the issue in detail..."
+                                required
+                            ></lightning-textarea>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="modal-btn cancel-btn" onclick={closeComplaintModal}>Cancel</button>
+                        <button class="modal-btn submit-btn" onclick={submitComplaint}>Submit Complaint</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <template if:true={isFoodTokenModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="modal-close-btn" title="Close" onclick={closeFoodTokenModal}>✕</button>
+                        <h2 class="modal-header-title">Issue Mess Food Token</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium custom-modal-body">
+                        <div class="form-field">
+                            <label class="form-label required">Select Student</label>
+                            <lightning-combobox
+                                name="student"
+                                variant="label-hidden"
+                                value={selectedStudentId}
+                                options={studentOptions}
+                                data-field="student"
+                                onchange={handleFieldChange}
+                                required
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label">Meal Type</label>
+                            <lightning-combobox
+                                name="mealType"
+                                variant="label-hidden"
+                                value={mealType}
+                                options={mealTypeOptions}
+                                data-field="mealType"
+                                onchange={handleFieldChange}
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label">Menu Item Details</label>
+                            <lightning-input
+                                type="text"
+                                variant="label-hidden"
+                                value={menuItem}
+                                data-field="menuItem"
+                                onchange={handleFieldChange}
+                            ></lightning-input>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="modal-btn cancel-btn" onclick={closeFoodTokenModal}>Cancel</button>
+                        <button class="modal-btn submit-btn success" onclick={submitFoodToken}>Issue Token</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+        <template if:true={isVisitorModalOpen}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <button class="modal-close-btn" title="Close" onclick={closeVisitorModal}>✕</button>
+                        <h2 class="modal-header-title">Register Gate Visitor</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_medium custom-modal-body">
+                        <div class="form-field">
+                            <label class="form-label required">Student Being Visited</label>
+                            <lightning-combobox
+                                name="student"
+                                variant="label-hidden"
+                                value={selectedStudentId}
+                                options={studentOptions}
+                                data-field="student"
+                                onchange={handleFieldChange}
+                                required
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label required">Visitor Full Name</label>
+                            <lightning-input
+                                type="text"
+                                variant="label-hidden"
+                                value={visitorName}
+                                data-field="visitorName"
+                                onchange={handleFieldChange}
+                                placeholder="Enter visitor's full name"
+                                required
+                            ></lightning-input>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label">Relation with Student</label>
+                            <lightning-combobox
+                                name="relation"
+                                variant="label-hidden"
+                                value={visitorRelation}
+                                options={relationOptions}
+                                data-field="relation"
+                                onchange={handleFieldChange}
+                            ></lightning-combobox>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label">Contact Phone Number</label>
+                            <lightning-input
+                                type="tel"
+                                variant="label-hidden"
+                                value={visitorPhone}
+                                data-field="phone"
+                                onchange={handleFieldChange}
+                                placeholder="10-digit mobile number"
+                            ></lightning-input>
+                        </div>
+
+                        <div class="form-field slds-m-top_medium">
+                            <label class="form-label">Purpose of Visit</label>
+                            <lightning-input
+                                type="text"
+                                variant="label-hidden"
+                                value={visitorPurpose}
+                                data-field="purpose"
+                                onchange={handleFieldChange}
+                                placeholder="Reason for visit"
+                            ></lightning-input>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="modal-btn cancel-btn" onclick={closeVisitorModal}>Cancel</button>
+                        <button class="modal-btn submit-btn" onclick={submitVisitor}>Register Entry</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>

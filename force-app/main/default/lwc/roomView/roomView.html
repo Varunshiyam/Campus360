@@ -1,0 +1,37 @@
+<template>
+    <div class="view-content-anim">
+        <div class="custom-card">
+            <div class="card-header">
+                <div class="header-left">
+                    <lightning-icon icon-name="standard:home" size="small"></lightning-icon>
+                    <h2>Hostels & Room Inventory</h2>
+                    <span class="slds-badge slds-theme_success">Total Rooms: {rooms.length}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <template if:true={rooms.length}>
+                    <div class="room-grid">
+                        <template for:each={rooms} for:item="r">
+                            <div key={r.id} class="room-card">
+                                <div class="room-card-top">
+                                    <span class="room-number">Room #{r.roomNumber}</span>
+                                    <template if:true={r.availability}>
+                                        <span class="status-pill status-avail">Available</span>
+                                    </template>
+                                    <template if:false={r.availability}>
+                                        <span class="status-pill status-occ">Occupied</span>
+                                    </template>
+                                </div>
+                                <div class="room-details">
+                                    <p><strong>Hostel Block:</strong> {r.hostelName}</p>
+                                    <p><strong>Capacity:</strong> {r.capacity} Beds</p>
+                                    <p><strong>Occupancy:</strong> {r.currentOccupancy} / {r.capacity}</p>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>
