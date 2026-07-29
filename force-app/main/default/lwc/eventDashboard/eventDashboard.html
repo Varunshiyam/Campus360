@@ -1,0 +1,51 @@
+<template>
+    <lightning-card title="Event Dashboard" icon-name="standard:event">
+        <div class="slds-p-around_medium">
+            <lightning-input 
+                type="text" 
+                label="Event Name" 
+                name="eventName" 
+                value={eventName} 
+                onchange={handleChange} 
+                required>
+            </lightning-input>
+
+            <lightning-input 
+                type="number" 
+                label="Number of Passengers" 
+                name="numberOfPassengers" 
+                value={numberOfPassengers} 
+                onchange={handleChange} 
+                required>
+            </lightning-input>
+
+            <lightning-input 
+                type="text" 
+                label="Location" 
+                name="location" 
+                value={location} 
+                onchange={handleChange} 
+                required>
+            </lightning-input>
+
+            <lightning-input 
+                type="number" 
+                label="Duration (Hours)" 
+                name="duration" 
+                value={duration} 
+                onchange={handleChange} 
+                required>
+            </lightning-input>
+
+            <div class="slds-m-top_medium">
+                <lightning-button 
+                    variant="brand" 
+                    label="Save Event" 
+                    title="Save Event" 
+                    onclick={handleSave} 
+                    class="slds-m-left_x-small">
+                </lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

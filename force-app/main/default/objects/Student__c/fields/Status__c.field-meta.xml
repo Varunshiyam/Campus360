@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Status__c</fullName>
+    <defaultValue>&quot;Inactive&quot;</defaultValue>
     <description>Active status for the student.</description>
     <label>Status</label>
     <required>false</required>
@@ -12,18 +13,18 @@
             <sorted>false</sorted>
             <value>
                 <fullName>Active</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Active</label>
             </value>
             <value>
                 <fullName>Inactive</fullName>
-                <default>false</default>
+                <default>true</default>
                 <label>Inactive</label>
             </value>
             <value>
-                <fullName>Prospect</fullName>
+                <fullName>Expired</fullName>
                 <default>false</default>
-                <label>Prospect</label>
+                <label>Expired</label>
             </value>
         </valueSetDefinition>
     </valueSet>

@@ -1,0 +1,17 @@
+.headline {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.list {
+    margin: 0;
+    padding-left: 1.25rem;
+}
+
+.module-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}

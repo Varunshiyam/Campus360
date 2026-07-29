@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Complaint_Type__c</fullName>
+    <label>Complaint Type</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Bus Delay</fullName>
+                <default>false</default>
+                <label>Bus Delay</label>
+            </value>
+            <value>
+                <fullName>Driver Behavior</fullName>
+                <default>false</default>
+                <label>Driver Behavior</label>
+            </value>
+            <value>
+                <fullName>Bus Breakdown</fullName>
+                <default>false</default>
+                <label>Bus Breakdown</label>
+            </value>
+            <value>
+                <fullName>Cleanliness Issue</fullName>
+                <default>false</default>
+                <label>Cleanliness Issue</label>
+            </value>
+            <value>
+                <fullName>Overcrowding</fullName>
+                <default>false</default>
+                <label>Overcrowding</label>
+            </value>
+            <value>
+                <fullName>Route Issue</fullName>
+                <default>false</default>
+                <label>Route Issue</label>
+            </value>
+            <value>
+                <fullName>Safety Issue</fullName>
+                <default>false</default>
+                <label>Safety Issue</label>
+            </value>
+            <value>
+                <fullName>Lost &amp; Found</fullName>
+                <default>false</default>
+                <label>Lost &amp; Found</label>
+            </value>
+            <value>
+                <fullName>Bus Pass Issue</fullName>
+                <default>false</default>
+                <label>Bus Pass Issue</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
