@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Duty__c</fullName>
+    <label>Duty</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Registration Desk</fullName>
+                <default>false</default>
+                <label>Registration Desk</label>
+            </value>
+            <value>
+                <fullName>Stage Management</fullName>
+                <default>false</default>
+                <label>Stage Management</label>
+            </value>
+            <value>
+                <fullName>Technical Support</fullName>
+                <default>false</default>
+                <label>Technical Support</label>
+            </value>
+            <value>
+                <fullName>Food Distribution</fullName>
+                <default>false</default>
+                <label>Food Distribution</label>
+            </value>
+            <value>
+                <fullName>Security</fullName>
+                <default>false</default>
+                <label>Security</label>
+            </value>
+            <value>
+                <fullName>Photography</fullName>
+                <default>false</default>
+                <label>Photography</label>
+            </value>
+            <value>
+                <fullName>Reception</fullName>
+                <default>false</default>
+                <label>Reception</label>
+            </value>
+            <value>
+                <fullName>Crowd Management</fullName>
+                <default>false</default>
+                <label>Crowd Management</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

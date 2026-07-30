@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Certificate_Eligible_Students__c</fullName>
+    <formula>TEXT (Attendance__r.Attendance_Status__c)  = &quot;Present&quot;</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Certificate Eligible Students</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -129,6 +129,7 @@
     <actionOverrides>
         <actionName>View</actionName>
         <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Event_Record_Page</content>
         <content>Event_form</content>
         <formFactor>Small</formFactor>
         <skipRecordTypeSelect>false</skipRecordTypeSelect>
@@ -136,6 +137,18 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>Event_Record_Page</content>
+        <formFactor>Large</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <allowInChatterGroups>false</allowInChatterGroups>
+    <compactLayoutAssignment>Event_Compact_Layout</compactLayoutAssignment>
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
@@ -158,6 +171,14 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Event</label>
     <nameField>
+        <label>Event Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Events</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <searchLayouts></searchLayouts>
+    <sharingModel>Read</sharingModel>
         <displayFormat>EVT-{000}</displayFormat>
         <label>Event ID</label>
         <trackHistory>false</trackHistory>

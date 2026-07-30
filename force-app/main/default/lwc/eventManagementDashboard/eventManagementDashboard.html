@@ -1,0 +1,51 @@
+<template>
+    <div class="dashboard-container">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            
+            <!-- Dashboard View -->
+            <template if:true={isDashboardView}>
+                <h1 class="slds-text-heading_large slds-m-bottom_large dashboard-title">Event Management Central</h1>
+                
+                <div class="slds-grid slds-wrap slds-grid_pull-padded-medium cards-grid">
+                    <template for:each={dashboardItems} for:item="item">
+                        <div key={item.id} class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-4 slds-p-around_medium">
+                            <div class="glass-card slds-box slds-box_link slds-theme_default slds-text-align_center" 
+                                 onclick={handleCardClick} 
+                                 data-object={item.objectApiName}
+                                 data-label={item.label}>
+                                
+                                <lightning-icon icon-name={item.icon} size="large" alternative-text={item.label} class="slds-m-bottom_medium card-icon"></lightning-icon>
+                                
+                                <h2 class="slds-text-heading_small card-title">{item.label}</h2>
+                                <p class="slds-text-body_small card-desc">{item.description}</p>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
+
+            <!-- Record Entry View -->
+            <template if:false={isDashboardView}>
+                <div class="form-header slds-m-bottom_large slds-grid slds-grid_vertical-align-center">
+                    <lightning-button-icon icon-name="utility:back" size="large" variant="border-filled" alternative-text="Back to Dashboard" onclick={handleBack} class="slds-m-right_medium back-btn"></lightning-button-icon>
+                    <h1 class="slds-text-heading_large form-title slds-m-bottom_none">New {selectedObjectLabel}</h1>
+                </div>
+                
+                <div class="glass-card form-container slds-p-around_large slds-scrollable_y" style="max-height: 65vh;">
+                    <div class="slds-form form-structured">
+                        <lightning-record-form
+                            object-api-name={selectedObjectApiName}
+                            layout-type="Full"
+                            columns="2"
+                            mode="edit"
+                            onsuccess={handleSuccess}
+                            oncancel={handleBack}>
+                        </lightning-record-form>
+                    </div>
+                </div>
+            </template>
+
+        </div>
+    </div>
+</template>
