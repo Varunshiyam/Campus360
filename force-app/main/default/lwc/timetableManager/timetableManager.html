@@ -1,0 +1,199 @@
+<template>
+    <div class={containerClass}>
+        <!-- Top Control Bar (Only for HOD/Principal in non-leave context) -->
+        <template if:false={leaveRequestTimetable}>
+            <div class="control-header">
+                <div class="slds-grid slds-gutters slds-grid_vertical-align-center">
+                    <template if:true={isPrincipal}>
+                        <div class="slds-col slds-size_1-of-4">
+                            <lightning-combobox
+                                name="department"
+                                label="Select Department"
+                                value={selectedDeptId}
+                                options={deptOptions}
+                                onchange={handleDeptChange}
+                            ></lightning-combobox>
+                        </div>
+                    </template>
+                    <template if:false={isFacultyRole}>
+                        <div class="slds-col slds-size_1-of-4">
+                            <lightning-combobox
+                                name="section"
+                                label="Select Section"
+                                value={selectedSection}
+                                options={sectionOptions}
+                                onchange={handleSectionChange}
+                            ></lightning-combobox>
+                        </div>
+                    </template>
+                    <div class="slds-col slds-size_1-of-4">
+                        <lightning-combobox
+                            name="semester"
+                            label="Select Semester"
+                            value={selectedSemester}
+                            options={semesterOptions}
+                            onchange={handleSemesterChange}
+                        ></lightning-combobox>
+                    </div>
+                    <template if:false={isFacultyRole}>
+                        <div class="slds-col slds-size_1-of-4 slds-m-top_large">
+                            <lightning-button
+                                label="⚡ Generate All Timetables (Sem 3-8)"
+                                variant="brand-outline"
+                                onclick={handleGenerateFullTimetables}
+                            ></lightning-button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <!-- Main Timetable Grid -->
+        <div class="timetable-grid-card">
+            <div class="grid-header">
+                <h3>{gridTitle}</h3>
+                <div class="legend">
+                    <span class="legend-item"><span class="legend-color theory"></span> Theory</span>
+                    <span class="legend-item"><span class="legend-color lab"></span> Lab</span>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="timetable-table">
+                    <thead>
+                        <tr>
+                            <th>Day</th>
+                            <template for:each={periods} for:item="p">
+                                <th key={p.value} class="period-hdr">
+                                    Period {p.value}
+                                    <small>{p.timeLabel}</small>
+                                </th>
+                            </template>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={gridRows} for:item="row">
+                            <tr key={row.day}>
+                                <td class="day-cell">{row.day}</td>
+                                <template for:each={row.cells} for:item="cell">
+                                    <td 
+                                        key={cell.period} 
+                                        class={cell.cssClass}
+                                        data-day={row.day}
+                                        data-period={cell.period}
+                                        onclick={handleCellClick}
+                                    >
+                                        <template if:true={cell.hasEntry}>
+                                            <div class="entry-sub" title={cell.subject}>{cell.subject}</div>
+                                            <div class="entry-fac">{cell.facultyName}</div>
+                                            <div class="entry-cls">{cell.classroom}</div>
+                                        </template>
+                                        <template if:false={cell.hasEntry}>
+                                            <template if:false={isReadOnly}>
+                                                <span class="add-slot-btn">+ Assign</span>
+                                            </template>
+                                        </template>
+                                    </td>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Faculty Workload Gauge Panel (Only for HOD/Principal in non-leave context) -->
+        <template if:true={showWorkloadPanel}>
+            <div class="workload-panel">
+                <div class="panel-header">
+                    <h4>Department Workload Gauges (Max 24 hrs)</h4>
+                </div>
+                <div class="workload-grid">
+                    <template for:each={workloads} for:item="w">
+                        <div key={w.id} class="workload-card">
+                            <div class="workload-info">
+                                <span class="fac-name">{w.name}</span>
+                                <span class={w.hoursClass}>{w.totalWorkload} / 24 hrs</span>
+                            </div>
+                            <div class="gauge-bar-outer">
+                                <div class={w.barClass} style={w.barStyle}></div>
+                            </div>
+                            <div class="workload-sub-details">
+                                <span>Theory: {w.theoryHours}h</span>
+                                <span>Lab: {w.labHours}h</span>
+                                <span>Subjects: {w.subjectsHandled}</span>
+                            </div>
+                            <template if:true={w.isOverloaded}>
+                                <div class="overload-warning-lbl">⚠️ Workload Limit Exceeded (> 24 hrs)</div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </template>
+
+        <!-- Slot Assignment Modal -->
+        <template if:true={showModal}>
+            <div class="modal-backdrop">
+                <div class="modal-card animate-scale-in">
+                    <div class="modal-header">
+                        <h3>Schedule Slot: {selectedDay} (Period {selectedPeriod})</h3>
+                        <button class="close-btn" onclick={closeModal}>×</button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Validation Alerts -->
+                        <template if:true={modalError}>
+                            <div class="error-banner">
+                                {modalError}
+                            </div>
+                        </template>
+                        <template if:true={conflictWarning}>
+                            <div class="warning-banner">
+                                ⚠️ {conflictWarning}
+                            </div>
+                        </template>
+
+                        <lightning-combobox
+                            name="modalSubject"
+                            label="Select Subject"
+                            value={modalSubjectId}
+                            options={subjectOptions}
+                            onchange={handleModalSubjectChange}
+                            required
+                        ></lightning-combobox>
+
+                        <lightning-combobox
+                            name="modalFaculty"
+                            label="Assign Faculty"
+                            value={modalFacultyId}
+                            options={facultyOptions}
+                            onchange={handleModalFacultyChange}
+                            required
+                        ></lightning-combobox>
+
+                        <lightning-input
+                            name="modalClassroom"
+                            label="Classroom / Laboratory"
+                            value={modalClassroom}
+                            onchange={handleModalClassroomChange}
+                            required
+                        ></lightning-input>
+
+                        <template if:true={isLabSelected}>
+                            <div class="info-alert">
+                                ℹ️ This is a Lab Subject. Standard rules require consecutive slots.
+                            </div>
+                        </template>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="action-btn text-btn" onclick={closeModal}>Cancel</button>
+                        <template if:true={selectedEntryId}>
+                            <button class="action-btn danger-btn" onclick={handleDeleteSlot}>Clear Slot</button>
+                        </template>
+                        <button class="action-btn brand-btn" onclick={handleSaveSlot}>Save Class</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

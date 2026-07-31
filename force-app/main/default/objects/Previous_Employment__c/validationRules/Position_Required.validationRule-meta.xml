@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Position_Required</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISBLANK(Position_Held__c)</errorConditionFormula>
+    <errorMessage>Position Held is required.</errorMessage>
+</ValidationRule>

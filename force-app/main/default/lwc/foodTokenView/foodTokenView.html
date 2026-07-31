@@ -1,0 +1,51 @@
+<template>
+    <div class="view-content-anim">
+        <div class="custom-card">
+            <div class="card-header">
+                <div class="header-left">
+                    <lightning-icon icon-name="utility:note" size="small"></lightning-icon>
+                    <h2>Mess Food Token Management</h2>
+                    <span class="slds-badge slds-theme_success">Active Tokens: {tokens.length}</span>
+                </div>
+                <button class="slds-button slds-button_success" onclick={handleNewToken}>+ Issue Token</button>
+            </div>
+            <div class="card-body">
+                <div class="menu-schedule-box slds-m-bottom_medium">
+                    <div class="menu-item"><strong>Breakfast</strong>: Idli & Dosa (7:30 AM - 9:00 AM)</div>
+                    <div class="menu-item"><strong>Lunch</strong>: South Special Meals (12:30 PM - 2:00 PM)</div>
+                    <div class="menu-item"><strong>Snacks</strong>: Tea & Samosa (4:30 PM - 5:30 PM)</div>
+                    <div class="menu-item"><strong>Dinner</strong>: Chapati & Rice (7:30 PM - 9:00 PM)</div>
+                </div>
+
+                <template if:true={tokens.length}>
+                    <div class="table-responsive">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Token ID</th>
+                                    <th>Student</th>
+                                    <th>Meal Type</th>
+                                    <th>Menu Details</th>
+                                    <th>Booking Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={tokens} for:item="t">
+                                    <tr key={t.id}>
+                                        <td><strong>{t.name}</strong></td>
+                                        <td>{t.studentName}</td>
+                                        <td><strong>{t.mealType}</strong></td>
+                                        <td>{t.menuItem}</td>
+                                        <td>{t.bookingTime}</td>
+                                        <td><span class={t.statusClass}>{t.status}</span></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

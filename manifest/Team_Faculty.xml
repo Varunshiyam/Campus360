@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+    <!-- Apex Classes -->
+    <types>
+        <members>LeaveRequestTriggerHandler</members>
+        <members>ScratchOrgProvisioner</members>
+        <members>TimetableTriggerHandler</members>
+        <members>UnifiedCampusPortalController</members>
+        <members>UnifiedCampusPortalControllerTest</members>
+        <members>LeaveRequestWorkflowTest</members>
+        <name>ApexClass</name>
+    </types>
+
+    <!-- Custom Application -->
+    <types>
+        <members>Campus_360</members>
+        <name>CustomApplication</name>
+    </types>
+
+    <!-- Custom Objects -->
+    <types>
+        <members>Announcement__c</members>
+        <members>Attendance__c</members>
+        <members>Faculty__c</members>
+        <members>HOD__c</members>
+        <members>Leave_Request__c</members>
+        <members>Password_Reset_Request__c</members>
+        <members>Previous_Employment__c</members>
+        <members>Principal__c</members>
+        <members>Timetable__c</members>
+        <name>CustomObject</name>
+    </types>
+
+    <!-- Custom Tabs -->
+    <types>
+        <members>Announcement__c</members>
+        <members>Attendance__c</members>
+        <members>Faculty__c</members>
+        <members>HOD__c</members>
+        <members>LOGIN</members>
+        <members>Leave_Request__c</members>
+        <members>Previous_Employment__c</members>
+        <members>Principal__c</members>
+        <members>Timetable__c</members>
+        <name>CustomTab</name>
+    </types>
+
+    <!-- Flexi Pages -->
+    <types>
+        <members>Campus360_Home</members>
+        <members>LOGIN</members>
+        <name>FlexiPage</name>
+    </types>
+
+    <!-- Lightning Web Components -->
+    <types>
+        <members>attendanceManager</members>
+        <members>facultyDashboard</members>
+        <members>forgotPassword</members>
+        <members>hodDashboard</members>
+        <members>leaveRequestManager</members>
+        <members>loginPortal</members>
+        <members>principalDashboard</members>
+        <members>registrationPortal</members>
+        <members>timetableManager</members>
+        <members>unifiedCampusPortal</members>
+        <name>LightningComponentBundle</name>
+    </types>
+
+    <!-- Apex Triggers -->
+    <types>
+        <members>LeaveRequestTrigger</members>
+        <members>TimetableTrigger</members>
+        <name>ApexTrigger</name>
+    </types>
+
+    <version>67.0</version>
+
+</Package>

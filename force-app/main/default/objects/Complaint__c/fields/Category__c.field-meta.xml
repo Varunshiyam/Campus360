@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Category__c</fullName>
+    <label>Category</label>
+    <required>true</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Electrical</fullName>
+                <default>false</default>
+                <label>Electrical</label>
+            </value>
+            <value>
+                <fullName>Plumbing</fullName>
+                <default>false</default>
+                <label>Plumbing</label>
+            </value>
+            <value>
+                <fullName>Cleaning</fullName>
+                <default>false</default>
+                <label>Cleaning</label>
+            </value>
+            <value>
+                <fullName>WiFi</fullName>
+                <default>false</default>
+                <label>WiFi</label>
+            </value>
+            <value>
+                <fullName>Water Leakage</fullName>
+                <default>false</default>
+                <label>Water Leakage</label>
+            </value>
+            <value>
+                <fullName>Furniture</fullName>
+                <default>false</default>
+                <label>Furniture</label>
+            </value>
+            <value>
+                <fullName>Food Quality</fullName>
+                <default>false</default>
+                <label>Food Quality</label>
+            </value>
+            <value>
+                <fullName>Mess Hygiene</fullName>
+                <default>false</default>
+                <label>Mess Hygiene</label>
+            </value>
+            <value>
+                <fullName>Fee Related</fullName>
+                <default>false</default>
+                <label>Fee Related</label>
+            </value>
+            <value>
+                <fullName>Visitor Issue</fullName>
+                <default>false</default>
+                <label>Visitor Issue</label>
+            </value>
+            <value>
+                <fullName>Security Issue</fullName>
+                <default>false</default>
+                <label>Security Issue</label>
+            </value>
+            <value>
+                <fullName>Hostel Rules</fullName>
+                <default>false</default>
+                <label>Hostel Rules</label>
+            </value>
+            <value>
+                <fullName>Room Allocation</fullName>
+                <default>false</default>
+                <label>Room Allocation</label>
+            </value>
+            <value>
+                <fullName>General Complaint</fullName>
+                <default>false</default>
+                <label>General Complaint</label>
+            </value>
+            <value>
+                <fullName>Others</fullName>
+                <default>false</default>
+                <label>Others</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

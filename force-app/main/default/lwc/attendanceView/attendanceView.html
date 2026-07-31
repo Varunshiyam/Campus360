@@ -1,0 +1,45 @@
+<template>
+    <div class="view-content-anim">
+        <div class="custom-card">
+            <div class="card-header">
+                <div class="header-left">
+                    <lightning-icon icon-name="utility:checkin" size="small"></lightning-icon>
+                    <h2>Daily Hostel Attendance Log</h2>
+                    <span class="slds-badge slds-theme_success">Log Count: {attendance.length}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <template if:true={attendance.length}>
+                    <div class="table-responsive">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Att ID</th>
+                                    <th>Student Name</th>
+                                    <th>Date</th>
+                                    <th>Check-in Time</th>
+                                    <th>Check-out Time</th>
+                                    <th>Status</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={attendance} for:item="a">
+                                    <tr key={a.id}>
+                                        <td><strong>{a.name}</strong></td>
+                                        <td>{a.studentName}</td>
+                                        <td>{a.attDate}</td>
+                                        <td>{a.checkInTime}</td>
+                                        <td>{a.checkOutTime}</td>
+                                        <td><span class="status-pill status-present">{a.status}</span></td>
+                                        <td>{a.remarks}</td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

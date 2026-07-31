@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Principal Dashboard" icon-name="standard:account">
+        <div class="slds-p-around_medium">
+            <p class="headline">Welcome to the principal workspace.</p>
+            <ul class="list">
+                <li>Review faculty performance reports</li>
+                <li>Approve leave and promotion requests</li>
+                <li>Publish announcements for the campus</li>
+            </ul>
+            <div class="module-stack">
+                <c-leave-request-manager role="Principal"></c-leave-request-manager>
+                <c-attendance-manager></c-attendance-manager>
+                <c-timetable-manager role="Principal"></c-timetable-manager>
+            </div>
+        </div>
+    </lightning-card>
+</template>

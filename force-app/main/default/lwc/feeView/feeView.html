@@ -1,0 +1,47 @@
+<template>
+    <div class="view-content-anim">
+        <div class="custom-card">
+            <div class="card-header">
+                <div class="header-left">
+                    <lightning-icon icon-name="utility:currency" size="small"></lightning-icon>
+                    <h2>Hostel Fee Accounting & Ledger</h2>
+                    <span class="slds-badge slds-theme_error">Pending Accounts: {fees.length}</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <template if:true={fees.length}>
+                    <div class="table-responsive">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                            <thead>
+                                <tr>
+                                    <th>Fee Record</th>
+                                    <th>Student Name</th>
+                                    <th>Academic Year</th>
+                                    <th>Total Fee</th>
+                                    <th>Paid Amount</th>
+                                    <th>Balance Due</th>
+                                    <th>Due Date</th>
+                                    <th>Payment Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <template for:each={fees} for:item="f">
+                                    <tr key={f.id}>
+                                        <td><strong>{f.name}</strong></td>
+                                        <td>{f.studentName}</td>
+                                        <td>{f.academicYear}</td>
+                                        <td>₹{f.totalFee}</td>
+                                        <td>₹{f.paidAmount}</td>
+                                        <td><strong style="color: #f87171;">₹{f.balance}</strong></td>
+                                        <td>{f.dueDate}</td>
+                                        <td><span class="status-pill status-pending">{f.paymentStatus}</span></td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

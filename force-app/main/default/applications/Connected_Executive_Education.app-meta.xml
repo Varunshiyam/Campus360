@@ -12,7 +12,19 @@
     <tabs>Free_Trial_Guide</tabs>
     <tabs>Learning_Management</tabs>
     <tabs>Course__c</tabs>
-    <tabs>Student__c</tabs>
     <tabs>Enrollment__c</tabs>
+    <tabs>Hostel__c</tabs>
+    <tabs>Room__c</tabs>
+    <tabs>Bed_Allocation__c</tabs>
+    <tabs>Hostel_Application__c</tabs>
+    <tabs>Hostel_Fee__c</tabs>
+    <tabs>Complaint__c</tabs>
+    <tabs>Visitor__c</tabs>
+    <tabs>Attendance__c</tabs>
+    <tabs>Leave_Request__c</tabs>
+    <tabs>Staff__c</tabs>
+    <tabs>Food_Token__c</tabs>
+    <tabs>Holiday__c</tabs>
+    <tabs>Student__c</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

@@ -1,0 +1,493 @@
+/* Timetable Manager Styling */
+.timetable-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Control header */
+.control-header {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.25rem;
+    border-radius: 12px;
+}
+
+/* Grid card */
+.timetable-grid-card {
+    background: linear-gradient(135deg, rgba(20, 30, 48, 0.95), rgba(36, 59, 85, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.grid-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.75rem;
+}
+
+.grid-header h3 {
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.legend {
+    display: flex;
+    gap: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.legend-color.theory {
+    background: #0284c7;
+}
+
+.legend-color.lab {
+    background: #7c3aed;
+}
+
+/* Table layout */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.timetable-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 6px;
+}
+
+.timetable-table th, .timetable-table td {
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 110px;
+    vertical-align: top;
+}
+
+.timetable-table th {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.period-hdr small {
+    display: block;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+    font-weight: 400;
+}
+
+.day-cell {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 70px;
+    font-size: 0.9rem;
+}
+
+/* Cell Types */
+.timetable-cell {
+    height: 75px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.cell-empty {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px dashed rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cell-empty:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.add-slot-btn {
+    opacity: 0;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+}
+
+.cell-empty:hover .add-slot-btn {
+    opacity: 1;
+}
+
+.cell-theory {
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.2), rgba(2, 132, 199, 0.4));
+    border: 1px solid rgba(2, 132, 199, 0.5);
+    color: #fff;
+}
+
+.cell-lab {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(124, 58, 237, 0.4));
+    border: 1px solid rgba(124, 58, 237, 0.5);
+    color: #fff;
+}
+
+.cell-clickable {
+    cursor: pointer;
+}
+
+.cell-clickable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+.cell-theory:hover {
+    border-color: #38bdf8;
+}
+
+.cell-lab:hover {
+    border-color: #a78bfa;
+}
+
+/* Cell content text */
+.entry-sub {
+    font-weight: 700;
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-bottom: 0.25rem;
+}
+
+.entry-fac {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0.15rem;
+}
+
+.entry-cls {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: monospace;
+}
+
+/* Compact layout for leave requests */
+.leave-compact .timetable-grid-card {
+    padding: 0.75rem;
+    background: rgba(15, 23, 42, 0.9);
+}
+
+.leave-compact .timetable-table th, .leave-compact .timetable-table td {
+    padding: 0.4rem;
+    font-size: 0.75rem;
+    min-width: 75px;
+}
+
+.leave-compact .day-cell {
+    min-height: 45px;
+    font-size: 0.75rem;
+}
+
+.leave-compact .timetable-cell {
+    height: 50px;
+}
+
+.leave-compact .entry-sub {
+    font-size: 0.7rem;
+}
+
+.leave-compact .entry-fac {
+    display: none;
+}
+
+.leave-compact .entry-cls {
+    font-size: 0.55rem;
+}
+
+/* Workload Gauges */
+.workload-panel {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+.workload-panel h4 {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.workload-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+.workload-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    transition: all 0.2s ease;
+}
+
+.workload-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.workload-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.fac-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.hours-normal {
+    color: #38bdf8;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.hours-warning {
+    color: #fbbf24;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.hours-danger {
+    color: #f87171;
+    font-weight: 700;
+    font-size: 0.85rem;
+    animation: text-pulse 1.5s infinite alternate;
+}
+
+.gauge-bar-outer {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.gauge-bar-inner {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s ease;
+}
+
+.gauge-bar-inner.bg-normal {
+    background: #0284c7;
+}
+
+.gauge-bar-inner.bg-warning {
+    background: #d97706;
+}
+
+.gauge-bar-inner.bg-danger {
+    background: #dc2626;
+}
+
+.workload-sub-details {
+    display: flex;
+    justify-content: space-between;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+}
+
+.overload-warning-lbl {
+    color: #f87171;
+    font-size: 0.7rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+/* Modals */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-card {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.modal-header h3 {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 1.75rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+.modal-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.4);
+}
+
+/* Buttons */
+.action-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.brand-btn {
+    background: #0284c7;
+    color: #fff;
+}
+
+.brand-btn:hover {
+    background: #0369a1;
+}
+
+.danger-btn {
+    background: #dc2626;
+    color: #fff;
+}
+
+.danger-btn:hover {
+    background: #b91c1c;
+}
+
+.text-btn {
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.text-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Warnings and Errors */
+.error-banner {
+    background: rgba(220, 38, 38, 0.2);
+    border: 1px solid rgba(220, 38, 38, 0.5);
+    color: #fca5a5;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.warning-banner {
+    background: rgba(217, 119, 6, 0.2);
+    border: 1px solid rgba(217, 119, 6, 0.5);
+    color: #fcd34d;
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.info-alert {
+    background: rgba(2, 132, 199, 0.15);
+    border-left: 3px solid #0284c7;
+    color: #e0f2fe;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 0 6px 6px 0;
+}
+
+/* Animations */
+.animate-scale-in {
+    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scaleIn {
+    0% { transform: scale(0.9); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes text-pulse {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; text-shadow: 0 0 4px rgba(248, 113, 113, 0.3); }
+}

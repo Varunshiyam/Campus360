@@ -143,10 +143,11 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <enableActivities>true</enableActivities>
+    <description>Staff members of the college hostel management system.</description>
+    <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
-    <enableHistory>true</enableHistory>
+    <enableHistory>false</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>true</enableReports>
     <enableSearch>true</enableSearch>
@@ -155,9 +156,8 @@
     <externalSharingModel>Private</externalSharingModel>
     <label>Staff</label>
     <nameField>
-        <displayFormat>STF-{000}</displayFormat>
+        <displayFormat>STF-{0000}</displayFormat>
         <label>Staff ID</label>
-        <trackHistory>false</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Staff</pluralLabel>

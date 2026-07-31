@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Message_should_contain_min_20_characters</fullName>
+    <active>true</active>
+    <errorConditionFormula>LEN(Message__c)&lt;20</errorConditionFormula>
+    <errorMessage>Announcement Message should contain at least 20 characters.</errorMessage>
+</ValidationRule>

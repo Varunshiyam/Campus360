@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <!-- Custom Applications -->
+    <types>
+        <members>Connected_Executive_Education</members>
+        <members>Smart_Hostel_Management</members>
+        <name>CustomApplication</name>
+    </types>
+
+    <!-- Custom Objects -->
+    <types>
+        <members>Attendance__c</members>
+        <members>Bed_Allocation__c</members>
+        <members>Complaint__c</members>
+        <members>Food_Token__c</members>
+        <members>Holiday__c</members>
+        <members>Hostel__c</members>
+        <members>Hostel_Application__c</members>
+        <members>Hostel_Fee__c</members>
+        <members>Leave_Request__c</members>
+        <members>Room__c</members>
+        <members>Staff__c</members>
+        <members>Student__c</members>
+        <name>CustomObject</name>
+    </types>
+
+    <!-- Custom Tabs -->
+    <types>
+        <members>Campus_Hostel_Hub</members>
+        <members>Free_Trial_Guide</members>
+        <members>Hostel__c</members>
+        <members>Room__c</members>
+        <members>Student__c</members>
+        <name>CustomTab</name>
+    </types>
+
+    <!-- Flows -->
+    <types>
+        <members>Auto_Room_Allocation</members>
+        <members>Complaint_Auto_Assignment_Flow</members>
+        <members>Food_Token_Booking_Validation</members>
+        <members>Hostel_Fee_Remainder</members>
+        <members>Room_Availability_Update</members>
+        <members>Visitor_Email_Notification</members>
+        <name>Flow</name>
+    </types>
+
+    <!-- Apex Classes -->
+    <types>
+        <members>CampusHostelHubController</members>
+        <members>CampusHostelHubControllerTest</members>
+        <members>HostelDashboardController</members>
+        <members>RoomAvailabilityService</members>
+        <members>RoomAvailabilityServiceTest</members>
+        <members>ScratchOrgProvisioner</members>
+        <members>StudentLookupAction</members>
+        <name>ApexClass</name>
+    </types>
+
+    <!-- Lightning Web Components (LWC Bundles) -->
+    <types>
+        <members>attendanceView</members>
+        <members>campusHostelHub</members>
+        <members>complaintView</members>
+        <members>dashboardView</members>
+        <members>feeView</members>
+        <members>foodTokenView</members>
+        <members>freeTrialGuide</members>
+        <members>hostelCommandCenter</members>
+        <members>hostelView</members>
+        <members>leaveView</members>
+        <members>roomView</members>
+        <members>studentView</members>
+        <members>visitorView</members>
+        <name>LightningComponentBundle</name>
+    </types>
+
+    <!-- FlexiPages (Lightning Pages & Utility Bars) -->
+    <types>
+        <members>CommandCenterApp_UtilityBar</members>
+        <members>Home_Page_Default</members>
+        <members>Hostel_Management_UtilityBar</members>
+        <name>FlexiPage</name>
+    </types>
+
+    <!-- Dashboards & Dashboard Folders -->
+    <types>
+        <members>HostelManagement</members>
+        <name>DashboardFolder</name>
+    </types>
+    <types>
+        <members>HostelManagement/UsGPDUKDbSmqueUAKrefyjccyMuPPS</members>
+        <name>Dashboard</name>
+    </types>
+
+    <!-- Reports -->
+    <types>
+        <members>unfiled$public/flow_screen_prebuilt_report</members>
+        <members>unfiled$public/flow_orchestration_run_ootb_report_two_four_eight</members>
+        <members>unfiled$public/flow_orchestration_stage_run_ootb_report_two_four_eight</members>
+        <members>unfiled$public/flow_orchestration_step_run_ootb_report_two_four_eight</members>
+        <members>unfiled$public/flow_orchestration_work_item_ootb_report_two_four_eight</members>
+        <members>unfiled$public/flow_orchestration_log_ootb_report_two_four_eight</members>
+        <name>Report</name>
+    </types>
+
+    <!-- Permission Sets -->
+    <types>
+        <members>ConnectedExecutiveEducationAccess</members>
+        <members>SmartHostelManagementAccess</members>
+        <name>PermissionSet</name>
+    </types>
+
+    <version>60.0</version>
+</Package>

@@ -1,0 +1,1520 @@
+<template>
+  <div class="portal-shell">
+    <!-- Main Top Header -->
+    <header class="hero-panel">
+      <div class="brand-block">
+        <div class="brand-badge font-orbitron">360</div>
+        <div>
+          <h1 class="main-title">Campus360 Enterprise Portal</h1>
+          <p class="subtitle">
+            Unified Workspace for Principals, HODs, and Faculty
+          </p>
+        </div>
+      </div>
+      <div class="meta-block">
+        <div class="live-pill">
+          <span class="pulse-indicator"></span> Live • {currentTime}
+        </div>
+        <div class="greeting-user">
+          {greeting}, <span class="highlight-user">{displayName}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Role Selection Screen -->
+    <template if:true={showRoleSelection}>
+      <section class="intro-card animate-fade-in">
+        <div class="intro-copy">
+          <h2>Access Gateway</h2>
+          <p>
+            Select your designation level to launch your personalized academic
+            environment.
+          </p>
+        </div>
+        <div class="role-grid">
+          <button
+            class="role-card principal"
+            data-role="Principal"
+            onclick={handleRoleSelect}
+          >
+            <span class="role-icon">🏛️</span>
+            <strong>Principal Suite</strong>
+            <small>Institutional KPIs, Department & Faculty Governance</small>
+          </button>
+          <button
+            class="role-card hod"
+            data-role="HOD"
+            onclick={handleRoleSelect}
+          >
+            <span class="role-icon">🧭</span>
+            <strong>HOD Center</strong>
+            <small>Department Management, Leaves & Schedules</small>
+          </button>
+          <button
+            class="role-card faculty"
+            data-role="Faculty"
+            onclick={handleRoleSelect}
+          >
+            <span class="role-icon">🎓</span>
+            <strong>Faculty Terminal</strong>
+            <small>Timetable, Leave Requests & Student Attendance</small>
+          </button>
+        </div>
+      </section>
+    </template>
+
+    <!-- Login Form Screen -->
+    <template if:true={showLoginFormView}>
+      <section class="form-card animate-fade-in">
+        <div class="section-head">
+          <button class="ghost-btn" onclick={handleBack}>← Back</button>
+          <div>
+            <h3>{selectedRole} Access Portal</h3>
+            <p class="form-desc">
+              Provide your authorization credentials below.
+            </p>
+          </div>
+        </div>
+
+        <!-- Principal Exist Welcome Banner -->
+        <template if:true={isPrincipal}>
+          <div class="welcome-box">
+            <span class="avatar-mock">👤</span>
+            <div>
+              <div class="welcome-title">Welcome back, Principal</div>
+              <div class="welcome-name">{existingPrincipalName}</div>
+            </div>
+          </div>
+        </template>
+
+        <div class="form-body">
+          <lightning-input
+            label="Username"
+            value={loginUsername}
+            onchange={handleLoginUsernameChange}
+            placeholder="Enter your username or email"
+          >
+          </lightning-input>
+          <lightning-input
+            label="Password"
+            type="password"
+            value={loginPassword}
+            onchange={handleLoginPasswordChange}
+            placeholder="••••••••"
+          >
+          </lightning-input>
+        </div>
+
+        <div class="actions">
+          <button class="action-btn brand-btn" onclick={handleLogin}>
+            Log In
+          </button>
+          <button class="action-btn text-btn" onclick={handleBack}>
+            Cancel
+          </button>
+        </div>
+
+        <template if:true={loading}>
+          <div class="spinner-container">
+            <lightning-spinner
+              alternative-text="Authenticating..."
+              size="medium"
+              variant="brand"
+            ></lightning-spinner>
+          </div>
+        </template>
+
+        <template if:true={loginErrorMessage}>
+          <div class="error-banner">{loginErrorMessage}</div>
+        </template>
+      </section>
+    </template>
+
+    <!-- First-Time Principal Setup / Register Screen -->
+    <template if:true={showRegisterView}>
+      <section class="form-card wide-card animate-fade-in">
+        <div class="section-head">
+          <button class="ghost-btn" onclick={handleBack}>← Back</button>
+          <div>
+            <h3 class="setup-title">No Principal Account Found</h3>
+            <p class="form-desc">
+              Please complete the initial system setup by registering the
+              Principal Account.
+            </p>
+          </div>
+        </div>
+
+        <div class="register-grid">
+          <div class="grid-col">
+            <lightning-input
+              label="Full Name *"
+              value={regFields.fullName}
+              onchange={handleRegFieldChange}
+              data-id="fullName"
+              placeholder="Dr. John Smith"
+            ></lightning-input>
+            <lightning-input
+              label="Employee ID *"
+              value={regFields.employeeId}
+              onchange={handleRegFieldChange}
+              data-id="employeeId"
+              placeholder="PR-001"
+            ></lightning-input>
+            <lightning-input
+              label="Mobile Number"
+              value={regFields.mobileNumber}
+              onchange={handleRegFieldChange}
+              data-id="mobileNumber"
+              placeholder="999-999-9999"
+            ></lightning-input>
+            <lightning-input
+              label="Email Address"
+              type="email"
+              value={regFields.email}
+              onchange={handleRegFieldChange}
+              data-id="email"
+              placeholder="john.smith@college.edu"
+            ></lightning-input>
+            <lightning-combobox
+              label="Gender"
+              value={regFields.gender}
+              options={genderOptions}
+              onchange={handleRegFieldChange}
+              data-id="gender"
+            ></lightning-combobox>
+            <lightning-input
+              label="Date of Birth"
+              type="date"
+              value={regFields.dob}
+              onchange={handleRegFieldChange}
+              data-id="dob"
+            ></lightning-input>
+          </div>
+          <div class="grid-col">
+            <lightning-input
+              label="Qualification"
+              value={regFields.qualification}
+              onchange={handleRegFieldChange}
+              data-id="qualification"
+              placeholder="Ph.D. in Leadership"
+            ></lightning-input>
+            <lightning-input
+              label="Years of Experience (Min 10)"
+              type="number"
+              value={regFields.experience}
+              onchange={handleRegFieldChange}
+              data-id="experience"
+              placeholder="15"
+            ></lightning-input>
+            <lightning-input
+              label="Address"
+              value={regFields.address}
+              onchange={handleRegFieldChange}
+              data-id="address"
+              placeholder="123 Campus Blvd"
+            ></lightning-input>
+            <lightning-input
+              label="Profile Photo URL"
+              value={regFields.photo}
+              onchange={handleRegFieldChange}
+              data-id="photo"
+              placeholder="https://college.edu/photos/john.jpg"
+            ></lightning-input>
+            <lightning-input
+              label="Username *"
+              value={regFields.username}
+              onchange={handleRegFieldChange}
+              data-id="username"
+              placeholder="johnsmith"
+            ></lightning-input>
+            <lightning-input
+              label="Password *"
+              type="password"
+              value={regFields.password}
+              onchange={handleRegFieldChange}
+              data-id="password"
+              placeholder="••••••••"
+            ></lightning-input>
+            <lightning-input
+              label="Confirm Password *"
+              type="password"
+              value={regFields.confirmPassword}
+              onchange={handleRegFieldChange}
+              data-id="confirmPassword"
+              placeholder="••••••••"
+            ></lightning-input>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button
+            class="action-btn brand-btn"
+            onclick={handlePrincipalRegister}
+          >
+            Save Principal Profile
+          </button>
+          <button class="action-btn text-btn" onclick={handleBack}>
+            Cancel
+          </button>
+        </div>
+
+        <template if:true={loading}>
+          <div class="spinner-container">
+            <lightning-spinner
+              alternative-text="Creating System Account..."
+              size="medium"
+              variant="brand"
+            ></lightning-spinner>
+          </div>
+        </template>
+
+        <template if:true={registerErrorMessage}>
+          <div class="error-banner">{registerErrorMessage}</div>
+        </template>
+      </section>
+    </template>
+
+    <!-- Main Dashboard View -->
+    <template if:true={showDashboardView}>
+      <section class="dashboard-card animate-fade-in">
+        <!-- Workspace Header -->
+        <div class="dashboard-header-bar">
+          <div class="user-profile-badge" onclick={openProfileModal}>
+            <img
+              src={currentUserSession.photo}
+              alt="Avatar"
+              class="avatar-img"
+              onerror={handleImageError}
+            />
+            <div>
+              <span class="user-role-badge">{selectedRole}</span>
+              <h4 class="user-greeting">{displayName}</h4>
+            </div>
+          </div>
+          <div class="header-buttons">
+            <button
+              class="header-action-btn edit-profile-btn"
+              onclick={openProfileModal}
+            >
+              👤 Profile Info
+            </button>
+            <button class="header-action-btn logout-btn" onclick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI Stats Cards -->
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span class="stat-label">Shift Status</span>
+            <strong class="stat-value">{livePulse}</strong>
+            <small>Dynamic mode tracking</small>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Institution Staff</span>
+            <strong class="stat-value">{stats.facultyCount} Members</strong>
+            <small>Across {stats.departmentsCount} departments</small>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Today's Attendance</span>
+            <strong class="stat-value">{stats.presentToday} Present</strong>
+            <small>{stats.absentToday} Absent Today</small>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Pending Leaves</span>
+            <strong class="stat-value">{stats.pendingLeaves} Requests</strong>
+            <small>Awaiting approval status</small>
+          </article>
+        </div>
+
+        <!-- Principal Specific Dashboard Layout -->
+        <template if:true={isPrincipal}>
+          <!-- Executive Analytics & Report Dashboard -->
+          <div class="analytics-report-section animate-fade-in">
+            <div class="analytics-header">
+              <div class="analytics-title-block">
+                <span class="gold-sparkle">✨</span>
+                <h3>Executive Analytics & Reports</h3>
+              </div>
+              <span class="report-timestamp">Live Institutional Report</span>
+            </div>
+
+            <div class="analytics-grid">
+              <!-- Visual Dashboard (SVG Charts) -->
+              <div class="analytics-card visual-dashboard">
+                <h4 class="card-subtitle">Visual Overview</h4>
+                
+                <div class="dashboard-charts">
+                  <!-- Attendance Pie/Ring -->
+                  <div class="chart-item">
+                    <div class="chart-label">Attendance Distribution</div>
+                    <div class="svg-ring-container">
+                      <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="50" class="ring-bg" />
+                        <circle cx="60" cy="60" r="50" class="ring-fg" stroke-dasharray="314" stroke-dashoffset={attendanceDashoffset} />
+                      </svg>
+                      <div class="ring-text">
+                        <span class="ring-percent">{attendancePercent}%</span>
+                        <span class="ring-sub">Present</span>
+                      </div>
+                    </div>
+                    <div class="chart-legend">
+                      <div class="legend-row">
+                        <span class="legend-dot present"></span>
+                        <span class="legend-lbl">Present ({stats.presentToday})</span>
+                      </div>
+                      <div class="legend-row">
+                        <span class="legend-dot absent"></span>
+                        <span class="legend-lbl">Absent ({stats.absentToday})</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Department Faculty Strength Bar Chart -->
+                  <div class="chart-item flex-grow">
+                    <div class="chart-label">Departmental Staff Strength</div>
+                    <div class="bar-chart-container">
+                      <template for:each={processedDepartments} for:item="dept">
+                        <div key={dept.id} class="bar-row">
+                          <span class="bar-name">{dept.name}</span>
+                          <div class="bar-outer">
+                            <div class="bar-inner" style={dept.barStyle}></div>
+                          </div>
+                          <span class="bar-val">{dept.facultyCount}</span>
+                        </div>
+                      </template>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Tabular Report -->
+              <div class="analytics-card tabular-report">
+                <h4 class="card-subtitle">Institutional Report Table</h4>
+                <div class="report-table-wrapper">
+                  <table class="luxury-table">
+                    <thead>
+                      <tr>
+                        <th>Department</th>
+                        <th>HOD Name</th>
+                        <th>Staff Strength</th>
+                        <th>Attendance Rate</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <template for:each={processedDepartments} for:item="dept">
+                        <tr key={dept.id}>
+                          <td class="bold-dept-name">{dept.name}</td>
+                          <td>{dept.hodName}</td>
+                          <td>{dept.facultyCount} members</td>
+                          <td>
+                            <span class="attendance-badge" style={dept.badgeStyle}>
+                              {dept.attendancePercent}%
+                            </span>
+                          </td>
+                          <td>
+                            <span class={dept.statusClass}>{dept.statusText}</span>
+                          </td>
+                        </tr>
+                      </template>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-body-layout">
+            <!-- Left Panel: Department Cards Grid -->
+            <div class="main-workspace-panel">
+              <div class="panel-header-container">
+                <div class="panel-header-title">Campus Departments</div>
+                <div class="panel-actions-row">
+                  <button
+                    class="action-btn brand-btn small-btn"
+                    onclick={openAddDeptModal}
+                  >
+                    + Dept
+                  </button>
+                  <button
+                    class="action-btn brand-btn small-btn"
+                    onclick={openAddHodModal}
+                  >
+                    + HOD
+                  </button>
+                  <button
+                    class="action-btn brand-btn small-btn"
+                    onclick={openAddFacultyModal}
+                  >
+                    + Faculty
+                  </button>
+                </div>
+              </div>
+              <div class="departments-grid">
+                <template for:each={departments} for:item="dept">
+                  <div
+                    key={dept.id}
+                    class="department-card-item"
+                    data-id={dept.id}
+                    onclick={openDepartmentDetails}
+                  >
+                    <div class="dept-header">
+                      <span class="dept-icon">🏢</span>
+                      <h4 class="dept-name">{dept.name}</h4>
+                    </div>
+                    <div class="dept-meta">
+                      <div class="meta-row">
+                        <strong>HOD:</strong> <span>{dept.hodName}</span>
+                      </div>
+                      <div class="meta-row">
+                        <strong>Staff Count:</strong>
+                        <span>{dept.facultyCount}</span>
+                      </div>
+                      <div class="meta-row">
+                        <strong>Class Attendance:</strong>
+                        <span>{dept.attendancePercent}%</span>
+                      </div>
+                    </div>
+                    <div class="dept-footer-bar">
+                      Click to Manage Department →
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Right Panel: Leave Management & Announcements -->
+            <div class="side-workspace-panel">
+              <!-- Leave Requests List -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">Pending HOD Leave Requests</div>
+                <template if:true={pendingHodLeaves.length}>
+                  <div class="leave-requests-list-container">
+                    <template for:each={pendingHodLeaves} for:item="req">
+                      <div key={req.id} class="leave-request-card">
+                        <div class="leave-info-block">
+                          <strong>{req.employeeName}</strong>
+                          <span class="reason-text">Reason: {req.reason}</span>
+                          <small class="leave-date">Applied: {req.startDate}</small>
+                          <small class="leave-type">Type: {req.leaveType}</small>
+                        </div>
+                        <div class="leave-actions-block">
+                          <lightning-textarea
+                            label="Approver Comments"
+                            variant="label-hidden"
+                            placeholder="Add comments..."
+                            data-id={req.id}
+                            class="approver-comment-input slds-m-bottom_x-small"
+                          ></lightning-textarea>
+                          <div class="slds-flex">
+                            <button
+                              class="approval-btn approve-btn"
+                              data-id={req.id}
+                              data-action="Approved"
+                              onclick={handleLeaveAction}
+                            >
+                              ✓ Approve
+                            </button>
+                            <button
+                              class="approval-btn reject-btn"
+                              data-id={req.id}
+                              data-action="Rejected"
+                              onclick={handleLeaveAction}
+                            >
+                              ✗ Reject
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={pendingHodLeaves.length}>
+                  <p class="no-records-text">No pending HOD leave requests.</p>
+                </template>
+              </div>
+
+              <!-- HOD Leave Approval History -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">HOD Leave History</div>
+                <template if:true={historyHodLeaves.length}>
+                  <div class="leave-requests-list-container">
+                    <template for:each={historyHodLeaves} for:item="req">
+                      <div key={req.id} class="leave-request-card">
+                        <div class="leave-info-block">
+                          <strong>{req.employeeName}</strong>
+                          <span class="reason-text">Reason: {req.reason}</span>
+                          <small class="leave-date">Applied: {req.startDate}</small>
+                          <small class="leave-type">Type: {req.leaveType}</small>
+                        </div>
+                        <div class="approval-details slds-m-top_x-small">
+                          <span class={req.statusClass}>{req.status}</span>
+                          <div class="slds-m-top_xx-small">
+                            <small><strong>Approved/Rejected By:</strong> {req.approvedBy}</small>
+                          </div>
+                          <div>
+                            <small><strong>Date:</strong> {req.approvalDate}</small>
+                          </div>
+                          <template if:true={req.comments}>
+                            <div>
+                              <small><strong>Comments:</strong> {req.comments}</small>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={historyHodLeaves.length}>
+                  <p class="no-records-text">No HOD leave history found.</p>
+                </template>
+              </div>
+
+              <!-- Post Announcement Board -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">Post Announcement</div>
+                <div class="announcement-form-box">
+                  <lightning-input
+                    label="Title"
+                    value={announceTitle}
+                    onchange={handleAnnounceTitleChange}
+                    placeholder="Holiday Notice"
+                  ></lightning-input>
+                  <lightning-textarea
+                    label="Message"
+                    value={announceMessage}
+                    onchange={handleAnnounceMessageChange}
+                    placeholder="Please note that classes are suspended tomorrow..."
+                  ></lightning-textarea>
+                  <div class="slds-m-top_small slds-m-bottom_small audience-checkboxes" style="display: flex; gap: 1.5rem; justify-content: flex-start; align-items: center;">
+                    <span style="font-weight: 700; color: var(--text-primary); font-size: 0.95rem;">Send to:</span>
+                    <lightning-input
+                      type="checkbox"
+                      label="HODs"
+                      checked={sendToHOD}
+                      onchange={handleSendToHODChange}
+                      style="--lwc-spacingMedium: 0rem;"
+                    ></lightning-input>
+                    <lightning-input
+                      type="checkbox"
+                      label="Faculty"
+                      checked={sendToFaculty}
+                      onchange={handleSendToFacultyChange}
+                      style="--lwc-spacingMedium: 0rem;"
+                    ></lightning-input>
+                  </div>
+                  <button
+                    class="action-btn brand-btn"
+                    onclick={handlePostAnnouncement}
+                  >
+                    Post Update
+                  </button>
+                </div>
+              </div>
+
+              <!-- Recent Announcements Feed for Principal -->
+              <div class="workspace-sub-panel" style="margin-top: 1.5rem;">
+                <div class="panel-header-title">Recent Posted Announcements</div>
+                <template if:true={announcementItems.length}>
+                  <div class="announcements-feed-container" style="max-height: 250px; overflow-y: auto; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                    <template for:each={announcementItems} for:item="ann">
+                      <div key={ann.id} class="announcement-item-card" style="padding: 0.75rem; background: var(--bg-card, #ffffff); border: 1px solid rgba(197, 160, 89, 0.25); border-radius: 8px; border-left: 4px solid var(--accent-gold, #c5a059); transition: transform 0.2s;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                          <strong style="font-size: 0.85rem; color: #1e293b;">{ann.title}</strong>
+                          <small style="color: var(--text-secondary); font-size: 0.7rem;">{ann.date}</small>
+                        </div>
+                        <p style="margin: 0; font-size: 0.8rem; color: #475569; line-height: 1.3;">{ann.detail}</p>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={announcementItems.length}>
+                  <p class="no-records-text">No announcements posted yet.</p>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- HOD Specific Dashboard Layout -->
+        <template if:true={isHod}>
+          <div class="dashboard-body-layout">
+            <!-- Left Panel: Department Details & Leave Request Form -->
+            <div class="main-workspace-panel">
+              <div class="panel-header-title">HOD Actions & Leave Requests</div>
+              <!-- Campus Announcements Board -->
+              <div class="workspace-sub-panel announcement-board animate-fade-in" style="margin-bottom: 1.5rem; width: 100%;">
+                <div class="panel-header-title">📢 Campus Announcements</div>
+                <template if:true={announcementItems.length}>
+                  <div class="announcements-feed-container" style="max-height: 250px; overflow-y: auto; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <template for:each={announcementItems} for:item="ann">
+                      <div key={ann.id} class="announcement-item-card" style="padding: 1rem; background: var(--bg-card, #ffffff); border: 1px solid rgba(197, 160, 89, 0.25); border-radius: 8px; border-left: 4px solid var(--accent-gold, #c5a059); transition: transform 0.2s;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                          <h5 style="margin: 0; font-weight: 800; font-size: 0.95rem; color: #1e293b;">{ann.title}</h5>
+                          <span style="font-size: 0.75rem; color: var(--text-secondary); background: #f1f5f9; padding: 2px 8px; border-radius: 9999px;">{ann.date}</span>
+                        </div>
+                        <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.4;">{ann.detail}</p>
+                        <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); text-align: right;">
+                          Posted by: <strong>{ann.postedBy}</strong>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={announcementItems.length}>
+                  <p class="no-records-text" style="margin-top: 1rem;">No active campus announcements.</p>
+                </template>
+              </div>
+
+              <div class="leave-submit-form">
+                <h5>Apply for Personal Leave</h5>
+                <div class="slds-m-bottom_small">
+                  <strong>Assigned Approver:</strong> Principal
+                </div>
+                <lightning-combobox
+                  label="Leave Type *"
+                  value={leaveType}
+                  options={leaveTypeOptions}
+                  onchange={handleLeaveInput}
+                  data-id="leaveType"
+                  required
+                ></lightning-combobox>
+                <div class="slds-grid slds-gutters slds-m-bottom_small">
+                  <div class="slds-col">
+                    <lightning-input
+                      type="date"
+                      label="From Date *"
+                      value={leaveFromDate}
+                      onchange={handleLeaveInput}
+                      data-id="leaveFromDate"
+                      required
+                    ></lightning-input>
+                  </div>
+                  <div class="slds-col">
+                    <lightning-input
+                      type="date"
+                      label="To Date *"
+                      value={leaveToDate}
+                      onchange={handleLeaveInput}
+                      data-id="leaveToDate"
+                      required
+                    ></lightning-input>
+                  </div>
+                </div>
+                <lightning-textarea
+                  label="Reason for Leave *"
+                  value={leaveReason}
+                  onchange={handleLeaveInput}
+                  data-id="leaveReason"
+                  placeholder="Describe the reason for leave request"
+                  required
+                ></lightning-textarea>
+                <button
+                  class="action-btn brand-btn"
+                  onclick={handleLeaveSubmit}
+                >
+                  Submit Request
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Panel: Leave Status tracking -->
+            <div class="side-workspace-panel">
+              <!-- Pending Faculty Leave Approvals -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">Pending Faculty Leave Requests</div>
+                <template if:true={pendingFacultyLeaves.length}>
+                  <div class="leave-requests-list-container">
+                    <template for:each={pendingFacultyLeaves} for:item="req">
+                      <div key={req.id} class="leave-request-card">
+                        <div class="leave-info-block">
+                          <strong>{req.employeeName}</strong>
+                          <span class="reason-text">Reason: {req.reason}</span>
+                          <small class="leave-date">Applied: {req.startDate}</small>
+                          <small class="leave-type">Type: {req.leaveType}</small>
+                        </div>
+                        <div class="leave-actions-block">
+                          <lightning-textarea
+                            label="Approver Comments"
+                            variant="label-hidden"
+                            placeholder="Add comments..."
+                            data-id={req.id}
+                            class="approver-comment-input slds-m-bottom_x-small"
+                          ></lightning-textarea>
+                          <div class="slds-flex">
+                            <button
+                              class="approval-btn approve-btn"
+                              data-id={req.id}
+                              data-action="Approved"
+                              onclick={handleLeaveAction}
+                            >
+                              ✓ Approve
+                            </button>
+                            <button
+                              class="approval-btn reject-btn"
+                              data-id={req.id}
+                              data-action="Rejected"
+                              onclick={handleLeaveAction}
+                            >
+                              ✗ Reject
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={pendingFacultyLeaves.length}>
+                  <p class="no-records-text">No pending faculty leave requests.</p>
+                </template>
+              </div>
+
+              <!-- Faculty Leave Approval History -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">Faculty Leave History</div>
+                <template if:true={historyFacultyLeaves.length}>
+                  <div class="leave-requests-list-container">
+                    <template for:each={historyFacultyLeaves} for:item="req">
+                      <div key={req.id} class="leave-request-card">
+                        <div class="leave-info-block">
+                          <strong>{req.employeeName}</strong>
+                          <span class="reason-text">Reason: {req.reason}</span>
+                          <small class="leave-date">Applied: {req.startDate}</small>
+                          <small class="leave-type">Type: {req.leaveType}</small>
+                        </div>
+                        <div class="approval-details slds-m-top_x-small">
+                          <span class={req.statusClass}>{req.status}</span>
+                          <div class="slds-m-top_xx-small">
+                            <small><strong>Approved/Rejected By:</strong> {req.approvedBy}</small>
+                          </div>
+                          <div>
+                            <small><strong>Date:</strong> {req.approvalDate}</small>
+                          </div>
+                          <template if:true={req.comments}>
+                            <div>
+                              <small><strong>Comments:</strong> {req.comments}</small>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={historyFacultyLeaves.length}>
+                  <p class="no-records-text">No faculty leave history found.</p>
+                </template>
+              </div>
+
+              <!-- HOD's Own Leave Status -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">My Leaves Status</div>
+                <template if:true={myLeaveRequests.length}>
+                  <div class="leave-requests-list-container">
+                    <template for:each={myLeaveRequests} for:item="req">
+                      <div key={req.id} class="leave-request-card">
+                        <div class="leave-info-block">
+                          <strong>{req.employeeName}</strong>
+                          <span class="reason-text">{req.reason}</span>
+                          <small class="leave-date">Dates: {req.startDate} to {req.endDate}</small>
+                          <small class="leave-type">Type: {req.leaveType}</small>
+                        </div>
+                        <div class="approval-details slds-m-top_x-small">
+                          <span class={req.statusClass}>{req.status}</span>
+                          <template if:true={req.approvedBy}>
+                            <div class="slds-m-top_xx-small">
+                              <small><strong>Approver:</strong> {req.approvedBy}</small>
+                            </div>
+                          </template>
+                          <template if:true={req.comments}>
+                            <div>
+                              <small><strong>Comments:</strong> {req.comments}</small>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={myLeaveRequests.length}>
+                  <p class="no-records-text">No leaves applied yet.</p>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+
+        <!-- Faculty Specific Dashboard Layout -->
+        <template if:true={isFaculty}>
+          <div class="dashboard-body-layout">
+            <!-- Left Panel: Student Attendance Board -->
+            <div class="main-workspace-panel">
+              <!-- Campus Announcements Board -->
+              <div class="workspace-sub-panel announcement-board animate-fade-in" style="margin-bottom: 1.5rem; width: 100%;">
+                <div class="panel-header-title">📢 Campus Announcements</div>
+                <template if:true={announcementItems.length}>
+                  <div class="announcements-feed-container" style="max-height: 250px; overflow-y: auto; margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+                    <template for:each={announcementItems} for:item="ann">
+                      <div key={ann.id} class="announcement-item-card" style="padding: 1rem; background: var(--bg-card, #ffffff); border: 1px solid rgba(197, 160, 89, 0.25); border-radius: 8px; border-left: 4px solid var(--accent-gold, #c5a059); transition: transform 0.2s;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                          <h5 style="margin: 0; font-weight: 800; font-size: 0.95rem; color: #1e293b;">{ann.title}</h5>
+                          <span style="font-size: 0.75rem; color: var(--text-secondary); background: #f1f5f9; padding: 2px 8px; border-radius: 9999px;">{ann.date}</span>
+                        </div>
+                        <p style="margin: 0; font-size: 0.85rem; color: #475569; line-height: 1.4;">{ann.detail}</p>
+                        <div style="margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); text-align: right;">
+                          Posted by: <strong>{ann.postedBy}</strong>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={announcementItems.length}>
+                  <p class="no-records-text" style="margin-top: 1rem;">No active campus announcements.</p>
+                </template>
+              </div>
+
+              <div class="panel-header-title">Student Attendance Board</div>
+              <p class="panel-desc">
+                Quickly toggle attendance for students in your assigned class
+                today.
+              </p>
+              <div class="attendance-table-container">
+                <template for:each={attendanceRecords} for:item="student">
+                  <div key={student.id} class="attendance-table-row">
+                    <div class="student-info-cell">
+                      <span class="student-avatar">👨‍🎓</span>
+                      <strong>{student.name}</strong>
+                    </div>
+                    <div>
+                      <button
+                        class="attendance-toggle-badge-btn"
+                        data-name={student.name}
+                        data-status={student.status}
+                        onclick={handleAttendanceToggle}
+                      >
+                        {student.status}
+                      </button>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </div>
+
+            <!-- Right Panel: Timetable & Leaves -->
+            <div class="side-workspace-panel">
+              <!-- Leave application -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">Apply for Leave</div>
+                <div class="leave-submit-form">
+                  <div class="slds-m-bottom_small">
+                    <strong>Assigned Approver:</strong> {assignedApproverName}
+                  </div>
+                  <lightning-combobox
+                    label="Leave Type *"
+                    value={leaveType}
+                    options={leaveTypeOptions}
+                    onchange={handleLeaveInput}
+                    data-id="leaveType"
+                    required
+                  ></lightning-combobox>
+                  <div class="slds-grid slds-gutters slds-m-bottom_small">
+                    <div class="slds-col">
+                      <lightning-input
+                        type="date"
+                        label="From Date *"
+                        value={leaveFromDate}
+                        onchange={handleLeaveInput}
+                        data-id="leaveFromDate"
+                        required
+                      ></lightning-input>
+                    </div>
+                    <div class="slds-col">
+                      <lightning-input
+                        type="date"
+                        label="To Date *"
+                        value={leaveToDate}
+                        onchange={handleLeaveInput}
+                        data-id="leaveToDate"
+                        required
+                      ></lightning-input>
+                    </div>
+                  </div>
+                  <lightning-textarea
+                    label="Reason *"
+                    value={leaveReason}
+                    onchange={handleLeaveInput}
+                    data-id="leaveReason"
+                    placeholder="Describe the reason for leave request"
+                    required
+                  ></lightning-textarea>
+                  <button
+                    class="action-btn brand-btn"
+                    onclick={handleLeaveSubmit}
+                  >
+                    Submit Request
+                  </button>
+                </div>
+              </div>
+
+              <!-- Faculty's Own Leave Status -->
+              <div class="workspace-sub-panel">
+                <div class="panel-header-title">My Leaves Status</div>
+                <template if:true={myLeaveRequests.length}>
+                  <div class="leave-requests-list-container">
+                    <template for:each={myLeaveRequests} for:item="req">
+                      <div key={req.id} class="leave-request-card">
+                        <div class="leave-info-block">
+                          <strong>{req.employeeName}</strong>
+                          <span class="reason-text">{req.reason}</span>
+                          <small class="leave-date">Dates: {req.startDate} to {req.endDate}</small>
+                          <small class="leave-type">Type: {req.leaveType}</small>
+                        </div>
+                        <div class="approval-details slds-m-top_x-small">
+                          <span class={req.statusClass}>{req.status}</span>
+                          <template if:true={req.approvedBy}>
+                            <div class="slds-m-top_xx-small">
+                              <small><strong>Approver:</strong> {req.approvedBy}</small>
+                            </div>
+                          </template>
+                          <template if:true={req.comments}>
+                            <div>
+                              <small><strong>Comments:</strong> {req.comments}</small>
+                            </div>
+                          </template>
+                        </div>
+                      </div>
+                    </template>
+                  </div>
+                </template>
+                <template if:false={myLeaveRequests.length}>
+                  <p class="no-records-text">No leaves applied yet.</p>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+      </section>
+    </template>
+
+    <!-- Department Details Modal (For Principal View) -->
+    <template if:true={showDeptModal}>
+      <div class="modal-backdrop-layer">
+        <div class="modal-card-box animate-scale-up">
+          <div class="modal-header">
+            <div>
+              <span class="modal-pre-title">Department Management</span>
+              <h3 class="modal-main-title">{selectedDept.name}</h3>
+            </div>
+            <button class="close-modal-btn" onclick={closeDeptModal}>×</button>
+          </div>
+          <div class="modal-body-content">
+            <template if:true={modalErrorMessage}>
+              <div class="error-banner">{modalErrorMessage}</div>
+            </template>
+            <!-- HOD Assignment Block -->
+            <div class="modal-section-box">
+              <h4 class="section-title">HOD Assignment</h4>
+              <div
+                class="hod-current-card"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                "
+              >
+                <div>
+                  <strong>Current HOD:</strong>
+                  <span>{selectedDept.hodName}</span>
+                </div>
+                <template if:true={selectedDept.hodId}>
+                  <button
+                    class="action-btn danger-btn small-btn"
+                    onclick={removeHOD}
+                  >
+                    Remove HOD
+                  </button>
+                </template>
+              </div>
+              <div class="assign-hod-form">
+                <lightning-combobox
+                  label="Choose New HOD Candidate"
+                  value={newHodId}
+                  options={hodCandidates}
+                  onchange={handleHODChange}
+                  placeholder="Select HOD Candidate"
+                >
+                </lightning-combobox>
+                <button
+                  class="action-btn brand-btn assign-btn"
+                  onclick={submitHODAssignment}
+                >
+                  Assign HOD
+                </button>
+              </div>
+            </div>
+
+            <!-- Faculty List by Designation -->
+            <div class="modal-section-box">
+              <h4 class="section-title">Faculty Members</h4>
+              <div class="faculty-list-layout">
+                <!-- Professors -->
+                <div class="designation-column">
+                  <div class="designation-header">Professors</div>
+                  <template if:true={selectedDept.professors.length}>
+                    <template for:each={selectedDept.professors} for:item="fac">
+                      <div
+                        key={fac.Id}
+                        class="faculty-item-card-row"
+                        data-id={fac.Id}
+                        onclick={openFacultyDetails}
+                      >
+                        <div class="faculty-main">
+                          <strong>{fac.Name}</strong>
+                          <small>{fac.Email__c}</small>
+                        </div>
+                        <span class="arrow-indicator">Edit →</span>
+                      </div>
+                    </template>
+                  </template>
+                  <template if:false={selectedDept.professors.length}>
+                    <p class="no-fac-text">No Professors registered.</p>
+                  </template>
+                </div>
+
+                <!-- Assistant Professors -->
+                <div class="designation-column">
+                  <div class="designation-header">Assistant Professors</div>
+                  <template if:true={selectedDept.assistantProfessors.length}>
+                    <template
+                      for:each={selectedDept.assistantProfessors}
+                      for:item="fac"
+                    >
+                      <div
+                        key={fac.Id}
+                        class="faculty-item-card-row"
+                        data-id={fac.Id}
+                        onclick={openFacultyDetails}
+                      >
+                        <div class="faculty-main">
+                          <strong>{fac.Name}</strong>
+                          <small>{fac.Email__c}</small>
+                        </div>
+                        <span class="arrow-indicator">Edit →</span>
+                      </div>
+                    </template>
+                  </template>
+                  <template if:false={selectedDept.assistantProfessors.length}>
+                    <p class="no-fac-text">
+                      No Assistant Professors registered.
+                    </p>
+                  </template>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timetable Sub-section -->
+            <div class="modal-section-box">
+              <h4 class="section-title">Department Timetable</h4>
+              <template if:true={timetableEntries.length}>
+                <div class="timetable-list-container">
+                  <template for:each={timetableEntries} for:item="entry">
+                    <div key={entry.id} class="timetable-row-item">
+                      <strong>{entry.timeSlot}</strong>
+                      <span>{entry.subject}</span>
+                    </div>
+                  </template>
+                </div>
+              </template>
+              <template if:false={timetableEntries.length}>
+                <p class="no-fac-text">No timetable entries set.</p>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Faculty Details Edit Modal -->
+    <template if:true={showFacultyModal}>
+      <div class="modal-backdrop-layer secondary-modal">
+        <div class="modal-card-box narrow-modal animate-scale-up">
+          <div class="modal-header">
+            <div>
+              <span class="modal-pre-title">Edit Profile Details</span>
+              <h3 class="modal-main-title">{selectedFaculty.name}</h3>
+            </div>
+            <button class="close-modal-btn" onclick={closeFacultyModal}>
+              ×
+            </button>
+          </div>
+          <div class="modal-body-content">
+            <template if:true={modalErrorMessage}>
+              <div class="error-banner">{modalErrorMessage}</div>
+            </template>
+            <lightning-input
+              label="Full Name"
+              value={facultyEditForm.name}
+              onchange={handleFacultyFieldChange}
+              data-id="name"
+            ></lightning-input>
+            <lightning-input
+              label="Email"
+              value={facultyEditForm.email}
+              onchange={handleFacultyFieldChange}
+              data-id="email"
+            ></lightning-input>
+            <lightning-input
+              label="Mobile Phone"
+              value={facultyEditForm.phone}
+              onchange={handleFacultyFieldChange}
+              data-id="phone"
+            ></lightning-input>
+            <lightning-input
+              label="Qualification"
+              value={facultyEditForm.qualification}
+              onchange={handleFacultyFieldChange}
+              data-id="qualification"
+            ></lightning-input>
+            <lightning-input
+              label="Designation"
+              value={facultyEditForm.designation}
+              onchange={handleFacultyFieldChange}
+              data-id="designation"
+            ></lightning-input>
+            <lightning-input
+              label="Years of Experience"
+              type="number"
+              value={facultyEditForm.experience}
+              onchange={handleFacultyFieldChange}
+              data-id="experience"
+            ></lightning-input>
+          </div>
+          <div class="modal-footer-actions">
+            <button class="action-btn brand-btn" onclick={submitFacultyEdit}>
+              Save Details
+            </button>
+            <button class="action-btn danger-btn" onclick={removeFaculty}>
+              Remove Faculty
+            </button>
+            <button class="action-btn text-btn" onclick={closeFacultyModal}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <!-- Principal Profile View & Edit Modal -->
+    <template if:true={showProfileModal}>
+      <div class="modal-backdrop-layer">
+        <div class="modal-card-box narrow-modal animate-scale-up">
+          <div class="modal-header">
+            <div>
+              <span class="modal-pre-title">Manage Account</span>
+              <h3 class="modal-main-title">Profile Settings</h3>
+            </div>
+            <button class="close-modal-btn" onclick={closeProfileModal}>
+              ×
+            </button>
+          </div>
+          <div class="modal-body-content">
+            <template if:true={modalErrorMessage}>
+              <div class="error-banner">{modalErrorMessage}</div>
+            </template>
+            <lightning-input
+              label="Name"
+              value={profileEditForm.name}
+              onchange={handleProfileFieldChange}
+              data-id="name"
+            ></lightning-input>
+            <lightning-input
+              label="Email"
+              value={profileEditForm.email}
+              onchange={handleProfileFieldChange}
+              data-id="email"
+            ></lightning-input>
+            <lightning-input
+              label="Mobile Number"
+              value={profileEditForm.phone}
+              onchange={handleProfileFieldChange}
+              data-id="phone"
+            ></lightning-input>
+            <lightning-input
+              label="Qualification"
+              value={profileEditForm.qualification}
+              onchange={handleProfileFieldChange}
+              data-id="qualification"
+            ></lightning-input>
+            <lightning-input
+              label="Years of Experience"
+              type="number"
+              value={profileEditForm.experience}
+              onchange={handleProfileFieldChange}
+              data-id="experience"
+            ></lightning-input>
+            <lightning-input
+              label="Address"
+              value={profileEditForm.address}
+              onchange={handleProfileFieldChange}
+              data-id="address"
+            ></lightning-input>
+          </div>
+          <div class="modal-footer-actions">
+            <button class="action-btn brand-btn" onclick={saveProfile}>
+              Update Settings
+            </button>
+            <button class="action-btn text-btn" onclick={closeProfileModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- Add Department Modal -->
+  <template if:true={showAddDeptModal}>
+    <div class="modal-backdrop-layer">
+      <div class="modal-card-box narrow-modal animate-scale-up">
+        <div class="modal-header">
+          <div>
+            <span class="modal-pre-title">Administration</span>
+            <h3 class="modal-main-title">Add Department</h3>
+          </div>
+          <button class="close-modal-btn" onclick={closeAddDeptModal}>×</button>
+        </div>
+        <div class="modal-body-content">
+          <template if:true={modalErrorMessage}>
+            <div class="error-banner">{modalErrorMessage}</div>
+          </template>
+          <lightning-input
+            label="Department Name *"
+            value={newDeptForm.name}
+            onchange={handleNewDeptFieldChange}
+            data-id="name"
+          ></lightning-input>
+          <lightning-input
+            label="Code *"
+            value={newDeptForm.code}
+            onchange={handleNewDeptFieldChange}
+            data-id="code"
+          ></lightning-input>
+          <lightning-input
+            label="Block"
+            value={newDeptForm.block}
+            onchange={handleNewDeptFieldChange}
+            data-id="block"
+          ></lightning-input>
+          <lightning-input
+            label="Email"
+            type="email"
+            value={newDeptForm.email}
+            onchange={handleNewDeptFieldChange}
+            data-id="email"
+          ></lightning-input>
+          <lightning-input
+            label="Phone"
+            type="tel"
+            value={newDeptForm.phone}
+            onchange={handleNewDeptFieldChange}
+            data-id="phone"
+          ></lightning-input>
+          <lightning-combobox
+            label="Type *"
+            value={newDeptForm.type}
+            options={deptTypeOptions}
+            onchange={handleNewDeptFieldChange}
+            data-id="type"
+          ></lightning-combobox>
+        </div>
+        <div class="modal-footer-actions">
+          <button class="action-btn brand-btn" onclick={submitNewDepartment}>
+            Save Department
+          </button>
+          <button class="action-btn text-btn" onclick={closeAddDeptModal}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Add HOD Modal -->
+  <template if:true={showAddHodModal}>
+    <div class="modal-backdrop-layer">
+      <div class="modal-card-box narrow-modal animate-scale-up">
+        <div class="modal-header">
+          <div>
+            <span class="modal-pre-title">Administration</span>
+            <h3 class="modal-main-title">Add HOD Profile</h3>
+          </div>
+          <button class="close-modal-btn" onclick={closeAddHodModal}>×</button>
+        </div>
+        <div class="modal-body-content">
+          <template if:true={modalErrorMessage}>
+            <div class="error-banner">{modalErrorMessage}</div>
+          </template>
+          <lightning-input
+            label="Full Name *"
+            value={newHodForm.name}
+            onchange={handleNewHodFieldChange}
+            data-id="name"
+          ></lightning-input>
+          <lightning-input
+            label="Email *"
+            type="email"
+            value={newHodForm.email}
+            onchange={handleNewHodFieldChange}
+            data-id="email"
+          ></lightning-input>
+          <lightning-input
+            label="Phone"
+            type="tel"
+            value={newHodForm.phone}
+            onchange={handleNewHodFieldChange}
+            data-id="phone"
+          ></lightning-input>
+          <lightning-input
+            label="Employee ID *"
+            value={newHodForm.employeeId}
+            onchange={handleNewHodFieldChange}
+            data-id="employeeId"
+          ></lightning-input>
+          <lightning-combobox
+            label="Department *"
+            value={newHodForm.departmentId}
+            options={deptOptions}
+            onchange={handleNewHodFieldChange}
+            data-id="departmentId"
+          ></lightning-combobox>
+          <lightning-input
+            label="Username *"
+            value={newHodForm.username}
+            onchange={handleNewHodFieldChange}
+            data-id="username"
+          ></lightning-input>
+          <lightning-input
+            label="Password *"
+            type="password"
+            value={newHodForm.password}
+            onchange={handleNewHodFieldChange}
+            data-id="password"
+          ></lightning-input>
+          <lightning-input
+            label="Experience (Years)"
+            type="number"
+            value={newHodForm.experience}
+            onchange={handleNewHodFieldChange}
+            data-id="experience"
+          ></lightning-input>
+        </div>
+        <div class="modal-footer-actions">
+          <button class="action-btn brand-btn" onclick={submitNewHOD}>
+            Save HOD
+          </button>
+          <button class="action-btn text-btn" onclick={closeAddHodModal}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <!-- Add Faculty Modal -->
+  <template if:true={showAddFacultyModal}>
+    <div class="modal-backdrop-layer">
+      <div class="modal-card-box narrow-modal animate-scale-up">
+        <div class="modal-header">
+          <div>
+            <span class="modal-pre-title">Administration</span>
+            <h3 class="modal-main-title">Add Faculty Profile</h3>
+          </div>
+          <button class="close-modal-btn" onclick={closeAddFacultyModal}>
+            ×
+          </button>
+        </div>
+        <div class="modal-body-content">
+          <template if:true={modalErrorMessage}>
+            <div class="error-banner">{modalErrorMessage}</div>
+          </template>
+          <lightning-input
+            label="Full Name *"
+            value={newFacForm.name}
+            onchange={handleNewFacFieldChange}
+            data-id="name"
+          ></lightning-input>
+          <lightning-input
+            label="Email *"
+            type="email"
+            value={newFacForm.email}
+            onchange={handleNewFacFieldChange}
+            data-id="email"
+          ></lightning-input>
+          <lightning-input
+            label="Phone"
+            type="tel"
+            value={newFacForm.phone}
+            onchange={handleNewFacFieldChange}
+            data-id="phone"
+          ></lightning-input>
+          <lightning-combobox
+            label="Designation *"
+            value={newFacForm.designation}
+            options={designationOptions}
+            onchange={handleNewFacFieldChange}
+            data-id="designation"
+          ></lightning-combobox>
+          <lightning-input
+            label="Qualification"
+            value={newFacForm.qualification}
+            onchange={handleNewFacFieldChange}
+            data-id="qualification"
+          ></lightning-input>
+          <lightning-input
+            label="Experience (Years)"
+            type="number"
+            value={newFacForm.experience}
+            onchange={handleNewFacFieldChange}
+            data-id="experience"
+          ></lightning-input>
+          <lightning-combobox
+            label="Department *"
+            value={newFacForm.departmentId}
+            options={deptOptions}
+            onchange={handleNewFacFieldChange}
+            data-id="departmentId"
+          ></lightning-combobox>
+          <lightning-input
+            label="Username *"
+            value={newFacForm.username}
+            onchange={handleNewFacFieldChange}
+            data-id="username"
+          ></lightning-input>
+          <lightning-input
+            label="Password *"
+            type="password"
+            value={newFacForm.password}
+            onchange={handleNewFacFieldChange}
+            data-id="password"
+          ></lightning-input>
+          <lightning-input
+            label="Date of Birth"
+            type="date"
+            value={newFacForm.dob}
+            onchange={handleNewFacFieldChange}
+            data-id="dob"
+          ></lightning-input>
+        </div>
+        <div class="modal-footer-actions">
+          <button class="action-btn brand-btn" onclick={submitNewFaculty}>
+            Save Faculty
+          </button>
+          <button class="action-btn text-btn" onclick={closeAddFacultyModal}>
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </template>
+</template>

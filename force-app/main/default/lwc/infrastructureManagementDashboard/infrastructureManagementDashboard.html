@@ -1,0 +1,403 @@
+<template>
+
+    <div class="dashboard">
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+        <section class="header">
+
+            <div class="header-left">
+
+                <div class="header-icon">
+                    🏢
+                </div>
+
+                <div>
+                    <h1>INFRASTRUCTURE MANAGEMENT</h1>
+
+                    <p>
+                        Employee, Tools, Complaints & Feedback Management
+                    </p>
+                </div>
+
+            </div>
+
+
+            <lightning-button
+                label="Refresh"
+                icon-name="utility:refresh"
+                variant="brand"
+                onclick={handleRefresh}>
+            </lightning-button>
+
+        </section>
+
+
+        <!-- =====================================
+             SUMMARY CARDS
+        ====================================== -->
+        <section class="summary-grid">
+
+
+            <!-- EMPLOYEES -->
+            <div
+                class="summary-card employee-card"
+                data-section="employees"
+                onclick={handleSectionChange}>
+
+                <div class="card-icon employee-icon">
+                    👤
+                </div>
+
+                <div class="card-content">
+
+                    <p class="card-title">
+                        Employees
+                    </p>
+
+                    <h2>
+                        {employeeCount}
+                    </h2>
+
+                    <span>
+                        View Employees
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOOLS -->
+            <div
+                class="summary-card tool-card"
+                data-section="tools"
+                onclick={handleSectionChange}>
+
+                <div class="card-icon tool-icon">
+                    ⚙️
+                </div>
+
+                <div class="card-content">
+
+                    <p class="card-title">
+                        Tools
+                    </p>
+
+                    <h2>
+                        {toolCount}
+                    </h2>
+
+                    <span>
+                        View Tools
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPLAINTS -->
+            <div
+                class="summary-card complaint-card"
+                data-section="complaints"
+                onclick={handleSectionChange}>
+
+                <div class="card-icon complaint-icon">
+                    ⚠️
+                </div>
+
+                <div class="card-content">
+
+                    <p class="card-title">
+                        Complaints
+                    </p>
+
+                    <h2>
+                        {complaintCount}
+                    </h2>
+
+                    <span>
+                        View Complaints
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEEDBACK -->
+            <div
+                class="summary-card feedback-card"
+                data-section="feedback"
+                onclick={handleSectionChange}>
+
+                <div class="card-icon feedback-icon">
+                    💬
+                </div>
+
+                <div class="card-content">
+
+                    <p class="card-title">
+                        Feedback
+                    </p>
+
+                    <h2>
+                        {feedbackCount}
+                    </h2>
+
+                    <span>
+                        View Feedback
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================
+             NAVIGATION BUTTONS
+        ====================================== -->
+        <section class="navigation">
+
+            <button
+                class={employeeButtonClass}
+                data-section="employees"
+                onclick={handleSectionChange}>
+
+                👤 Employees
+
+            </button>
+
+
+            <button
+                class={toolButtonClass}
+                data-section="tools"
+                onclick={handleSectionChange}>
+
+                ⚙️ Tools
+
+            </button>
+
+
+            <button
+                class={complaintButtonClass}
+                data-section="complaints"
+                onclick={handleSectionChange}>
+
+                ⚠️ Infrastructure Complaints
+
+            </button>
+
+
+            <button
+                class={feedbackButtonClass}
+                data-section="feedback"
+                onclick={handleSectionChange}>
+
+                💬 Feedback
+
+            </button>
+
+        </section>
+
+
+        <!-- =====================================
+             LOADING SPINNER
+        ====================================== -->
+        <template if:true={isLoading}>
+
+            <div class="spinner-container">
+
+                <lightning-spinner
+                    alternative-text="Loading..."
+                    size="medium">
+                </lightning-spinner>
+
+            </div>
+
+        </template>
+
+
+        <!-- =====================================
+             EMPLOYEE TABLE
+        ====================================== -->
+        <template if:true={showEmployees}>
+
+            <section class="data-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            👤 Employees
+                        </h2>
+
+                        <p>
+                            All employee records
+                        </p>
+
+                    </div>
+
+                    <div class="record-count">
+                        {employeeCount} Records
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <lightning-datatable
+                        key-field="Id"
+                        data={employees}
+                        columns={employeeColumns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+
+                </div>
+
+            </section>
+
+        </template>
+
+
+        <!-- =====================================
+             TOOLS TABLE
+        ====================================== -->
+        <template if:true={showTools}>
+
+            <section class="data-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            ⚙️ Tools
+                        </h2>
+
+                        <p>
+                            All tool records
+                        </p>
+
+                    </div>
+
+                    <div class="record-count">
+                        {toolCount} Records
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <lightning-datatable
+                        key-field="Id"
+                        data={tools}
+                        columns={toolColumns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+
+                </div>
+
+            </section>
+
+        </template>
+
+
+        <!-- =====================================
+             COMPLAINT TABLE
+        ====================================== -->
+        <template if:true={showComplaints}>
+
+            <section class="data-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            ⚠️ Infrastructure Complaints
+                        </h2>
+
+                        <p>
+                            All infrastructure complaint records
+                        </p>
+
+                    </div>
+
+                    <div class="record-count">
+                        {complaintCount} Records
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <lightning-datatable
+                        key-field="Id"
+                        data={complaints}
+                        columns={complaintColumns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+
+                </div>
+
+            </section>
+
+        </template>
+
+
+        <!-- =====================================
+             FEEDBACK TABLE
+        ====================================== -->
+        <template if:true={showFeedback}>
+
+            <section class="data-section">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <h2>
+                            💬 Feedback
+                        </h2>
+
+                        <p>
+                            All feedback records
+                        </p>
+
+                    </div>
+
+                    <div class="record-count">
+                        {feedbackCount} Records
+                    </div>
+
+                </div>
+
+
+                <div class="table-container">
+
+                    <lightning-datatable
+                        key-field="Id"
+                        data={feedbacks}
+                        columns={feedbackColumns}
+                        hide-checkbox-column>
+                    </lightning-datatable>
+
+                </div>
+
+            </section>
+
+        </template>
+
+
+    </div>
+
+</template>

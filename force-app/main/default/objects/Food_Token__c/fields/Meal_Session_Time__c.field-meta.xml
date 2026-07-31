@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Meal_Session_Time__c</fullName>
+    <externalId>false</externalId>
+    <formula>CASE(
+Meal_Type__c,
+
+&quot;Breakfast&quot;,&quot;7:30 AM - 9:00 AM&quot;,
+
+&quot;Lunch&quot;,&quot;12:00 PM - 2:00 PM&quot;,
+
+&quot;Snacks&quot;,&quot;4:00 PM - 5:00 PM&quot;,
+
+&quot;Dinner&quot;,&quot;7:00 PM - 9:00 PM&quot;,
+
+&quot;Not Assigned&quot;
+)</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Meal Session Time</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>
