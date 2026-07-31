@@ -1,0 +1,358 @@
+<template>
+
+    <!-- ================= HERO SECTION ================= -->
+
+    <section class="hero">
+
+        <div class="hero-left">
+
+            <h1>
+                📚 Library Management System
+            </h1>
+
+            <p>
+                Welcome to a modern Salesforce powered Library Management System.
+                Easily manage books, students, librarians, book issues,
+                returns, fines and reports with automated workflows
+                and email notifications.
+            </p>
+
+            <div class="hero-buttons">
+
+                <lightning-button
+                    variant="brand"
+                    label="📖 Books"
+                    onclick={navigateBooks}>
+                </lightning-button>
+
+                <lightning-button
+                    variant="brand-outline"
+                    label="👨‍🎓 Students"
+                    onclick={navigateStudents}>
+                </lightning-button>
+
+                <lightning-button
+                    variant="success"
+                    label="📚 Issue Book"
+                    onclick={navigateIssue}>
+                </lightning-button>
+
+            </div>
+
+        </div>
+
+        <div class="hero-right">
+
+            <img
+                src={imageUrl}
+                alt="Library Management"
+                class="hero-image"/>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= QUICK NAVIGATION ================= -->
+
+    <section class="quick-links">
+
+        <div class="nav-card" onclick={navigateBooks}>
+            <div class="icon">📖</div>
+            <h2>Books</h2>
+            <p>View and manage all books available in the library.</p>
+        </div>
+
+        <div class="nav-card" onclick={navigateStudents}>
+            <div class="icon">👨‍🎓</div>
+            <h2>Students</h2>
+            <p>Manage student information and memberships.</p>
+        </div>
+
+        <div class="nav-card" onclick={navigateIssue}>
+            <div class="icon">📚</div>
+            <h2>Book Issue</h2>
+            <p>Issue books and manage return dates.</p>
+        </div>
+
+        <div class="nav-card" onclick={navigateFine}>
+            <div class="icon">💰</div>
+            <h2>Fine</h2>
+            <p>Track overdue books and library fines.</p>
+        </div>
+
+        <div class="nav-card" onclick={navigateLibrarian}>
+            <div class="icon">👨‍💼</div>
+            <h2>Librarians</h2>
+            <p>Maintain librarian information.</p>
+        </div>
+
+        <div class="nav-card" onclick={navigateReports}>
+            <div class="icon">📊</div>
+            <h2>Reports</h2>
+            <p>View all Library Reports.</p>
+        </div>
+
+        <div class="nav-card" onclick={navigateDashboard}>
+            <div class="icon">📈</div>
+            <h2>Dashboard</h2>
+            <p>View Library Analytics Dashboard.</p>
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <section class="stats">
+
+        <div class="stat-card">
+
+            <h1>📚</h1>
+
+            <h2>Books</h2>
+
+            <span>Manage Library Collection</span>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h1>👨‍🎓</h1>
+
+            <h2>Students</h2>
+
+            <span>Registered Members</span>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h1>📖</h1>
+
+            <h2>Borrowing</h2>
+
+            <span>Issue & Return Books</span>
+
+        </div>
+
+        <div class="stat-card">
+
+            <h1>💰</h1>
+
+            <h2>Fine</h2>
+
+            <span>Automatic Fine Calculation</span>
+
+        </div>
+
+    </section>
+        <!-- ================= FEATURES ================= -->
+
+    <section class="features">
+
+        <h1>Why Choose Our Library?</h1>
+
+        <div class="feature-grid">
+
+            <div class="feature-card">
+
+                <h2>📖 Book Management</h2>
+
+                <p>
+                    Add, edit and organize books with categories,
+                    authors and available copies using Salesforce.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h2>👨‍🎓 Student Management</h2>
+
+                <p>
+                    Store complete student details with borrowing history
+                    and library membership records.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h2>📩 Email Automation</h2>
+
+                <p>
+                    Automatic email notifications when books are issued,
+                    returned and overdue using Salesforce Flows.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h2>💰 Fine Calculation</h2>
+
+                <p>
+                    Automatically calculate overdue fines and
+                    manage payments efficiently.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h2>📊 Reports</h2>
+
+                <p>
+                    Generate professional reports for books,
+                    students, issues and fines.
+                </p>
+
+            </div>
+
+            <div class="feature-card">
+
+                <h2>☁ Salesforce Powered</h2>
+
+                <p>
+                    Secure, scalable and completely built using
+                    Salesforce Lightning Platform.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+    <!-- ================= ABOUT ================= -->
+
+    <section class="about">
+
+        <div class="about-left">
+
+            <h1>About Our Library</h1>
+
+            <p>
+
+                Our Library Management System simplifies every aspect
+                of library administration.
+
+                From maintaining books to managing students,
+                librarians, borrowing, returns, overdue reminders,
+                email notifications and reports,
+                everything is automated using Salesforce Flows.
+
+            </p>
+
+            <ul>
+
+                <li>✔ Book Issue & Return</li>
+
+                <li>✔ Student Management</li>
+
+                <li>✔ Librarian Management</li>
+
+                <li>✔ Email Notifications</li>
+
+                <li>✔ Fine Management</li>
+
+                <li>✔ Reports & Dashboards</li>
+
+                <li>✔ Salesforce Automation</li>
+
+            </ul>
+
+        </div>
+
+        <div class="about-right">
+
+            <!-- Static Resource Image -->
+
+            <img
+                src={imageUrl}
+                alt="Library"
+                class="about-image"/>
+
+        </div>
+
+    </section>
+
+
+
+
+    <!-- ================= CALL TO ACTION ================= -->
+
+    <section class="cta">
+
+        <h1>Ready to Explore the Library?</h1>
+
+        <p>
+
+            Start managing books, students,
+            borrowing and returns efficiently with
+            Salesforce.
+
+        </p>
+
+        <lightning-button
+
+            variant="brand"
+
+            label="Go To Books"
+
+            onclick={navigateBooks}>
+
+        </lightning-button>
+
+    </section>
+        <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="footer-content">
+
+            <h2>📚 Library Management System</h2>
+
+            <p>
+                Built using Salesforce Lightning Web Components,
+                Flows, Reports & Dashboards.
+            </p>
+
+            <div class="footer-links">
+
+                <span>📖 Books</span>
+
+                <span>👨‍🎓 Students</span>
+
+                <span>📚 Book Issue</span>
+
+                <span>💰 Fine</span>
+
+                <span>👨‍💼 Librarians</span>
+
+                <span>📊 Reports</span>
+
+                <span>📈 Dashboard</span>
+
+            </div>
+
+            <hr>
+
+            <small>
+
+                © 2026 Library Management System |
+                Powered by Salesforce Lightning Platform
+
+            </small>
+
+        </div>
+
+    </footer>
+
+</template>

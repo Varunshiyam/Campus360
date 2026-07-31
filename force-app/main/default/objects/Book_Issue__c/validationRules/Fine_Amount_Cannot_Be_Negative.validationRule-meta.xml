@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fine_Amount_Cannot_Be_Negative</fullName>
+    <active>true</active>
+    <description>Prevents users from entering a negative fine amount.</description>
+    <errorConditionFormula>Fine_Amount__c  &lt; 0</errorConditionFormula>
+    <errorDisplayField>Fine_Amount__c</errorDisplayField>
+    <errorMessage>Fine Amount cannot be negative.</errorMessage>
+</ValidationRule>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Employee_ID_Required</fullName>
+    <active>true</active>
+    <description>Ensures that every Librarian record has an Employee ID before it can be saved. This prevents the creation of records without a unique employee identifier, which is required for tracking and managing library staff.</description>
+    <errorConditionFormula>ISBLANK( Librarian_ID__c )</errorConditionFormula>
+    <errorDisplayField>Librarian_ID__c</errorDisplayField>
+    <errorMessage>Employee ID cannot be blank.</errorMessage>
+</ValidationRule>

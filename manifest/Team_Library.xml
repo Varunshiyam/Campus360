@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+
+<!-- Custom Object -->
+    <types>
+        <members>Fine__c</members>
+        <members>Book__c</members>
+        <members>Student0__c</members>
+        <members>Book_Issue__c</members>
+        <members>Librarian__c</members>
+        <name>CustomObject</name>
+    </types>
+
+
+
+     <!-- Flows -->
+    <types>
+        <members>Issue_Book_Decrease_Available_Copy</members>
+        <members>Return_Book_Increase_Available_Copy</members>
+        <members>Book_Issue_and_Return_Email_Flow</members>
+        <members>Return_Remainder</members>
+        <name>Flow</name>
+    </types>
+
+
+
+    <!-- Lightning Web Component -->
+    <types>
+        <members>libraryHome</members>
+        <name>LightningComponentBundle</name>
+    </types>
+
+
+
+     <!-- Report -->
+    <types>
+        <members>Public_Reports/New_Book_Issues_Report_eFl</members>
+        <name>Report</name>
+    </types>
+
+
+
+    <!-- Dashboard -->
+    <types>
+        <members>Public_Dashboard/rnhiyRYEdrFCgdKCOLDcfWdbirXXhl</members>
+        <name>Dashboard</name>
+    </types>
+
+
+    
+    <!-- FlexiPage -->
+    <types>
+        <members>Dashboard</members>
+        <members>Library_Home</members>
+        <members>Reports</members>
+        <name>FlexiPage</name>
+    </types>
+
+
+    <version>67.0</version>
+</Package>

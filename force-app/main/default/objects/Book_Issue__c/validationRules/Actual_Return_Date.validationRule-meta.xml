@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Actual_Return_Date</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+ NOT( ISBLANK( Actual_Return_Date__c )),
+ Actual_Return_Date__c  &lt;  Issue_Date__c
+)</errorConditionFormula>
+    <errorDisplayField>Actual_Return_Date__c</errorDisplayField>
+    <errorMessage>Actual Return Date cannot be before Return date</errorMessage>
+</ValidationRule>

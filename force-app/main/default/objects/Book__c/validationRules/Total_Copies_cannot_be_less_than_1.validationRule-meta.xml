@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Copies_cannot_be_less_than_1</fullName>
+    <active>true</active>
+    <errorConditionFormula>Total_Copies__c &lt; 1</errorConditionFormula>
+    <errorDisplayField>Total_Copies__c</errorDisplayField>
+    <errorMessage>Total Copies must be at least 1.</errorMessage>
+</ValidationRule>
