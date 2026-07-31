@@ -1,0 +1,207 @@
+<template>
+    <div class="view-content-anim">
+        <!-- 10 Vivid KPI Cards -->
+        <section class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper indigo">
+                        <lightning-icon icon-name="utility:people" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-info">Active</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.totalStudents}</div>
+                    <div class="kpi-label">Total Students</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper blue">
+                        <lightning-icon icon-name="utility:company" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-info">Blocks</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.totalHostels}</div>
+                    <div class="kpi-label">Total Hostels</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper cyan">
+                        <lightning-icon icon-name="utility:apps" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-info">Capacity</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.totalRooms}</div>
+                    <div class="kpi-label">Total Rooms</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper emerald">
+                        <lightning-icon icon-name="utility:success" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-success">Ready</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.availableRooms}</div>
+                    <div class="kpi-label">Available Rooms</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper rose">
+                        <lightning-icon icon-name="utility:lock" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-danger">Occupied</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.occupiedRooms}</div>
+                    <div class="kpi-label">Occupied Rooms</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper amber">
+                        <lightning-icon icon-name="utility:warning" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-warning">Action Needed</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.pendingComplaints}</div>
+                    <div class="kpi-label">Pending Complaints</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper teal">
+                        <lightning-icon icon-name="utility:check" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-success">Today</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.complaintsResolvedToday}</div>
+                    <div class="kpi-label">Resolved Today</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper violet">
+                        <lightning-icon icon-name="utility:note" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-info">Mess</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.foodTokensIssuedToday}</div>
+                    <div class="kpi-label">Tokens Today</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper sky">
+                        <lightning-icon icon-name="utility:groups" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-info">Gate Pass</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.todaysVisitors}</div>
+                    <div class="kpi-label">Today's Visitors</div>
+                </div>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <div class="kpi-icon-wrapper red">
+                        <lightning-icon icon-name="utility:currency" size="small" variant="inverse"></lightning-icon>
+                    </div>
+                    <span class="kpi-badge badge-danger">Due</span>
+                </div>
+                <div class="kpi-content">
+                    <div class="kpi-value">{summary.feePendingStudents}</div>
+                    <div class="kpi-label">Fee Pending</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="section-grid">
+            <!-- Recent Complaints -->
+            <div class="custom-card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        <lightning-icon icon-name="standard:case" size="small"></lightning-icon>
+                        <h2>Recent Complaints</h2>
+                    </div>
+                    <button class="slds-button slds-button_brand slds-button_x-small" onclick={handleOpenComplaint}>Log New</button>
+                </div>
+                <div class="card-body">
+                    <template if:true={complaints.length}>
+                        <div class="table-responsive">
+                            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Student</th>
+                                        <th>Category</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <template for:each={complaints} for:item="c">
+                                        <tr key={c.id}>
+                                            <td><strong>{c.complaintId}</strong></td>
+                                            <td>{c.studentName}</td>
+                                            <td>{c.category}</td>
+                                            <td><span class={c.priorityClass}>{c.priority}</span></td>
+                                            <td><span class={c.statusClass}>{c.status}</span></td>
+                                            <td>
+                                                <template if:true={c.isPending}>
+                                                    <button class="slds-button slds-button_success slds-button_x-small" data-id={c.id} onclick={handleResolve}>Resolve</button>
+                                                </template>
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </tbody>
+                            </table>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Hostel Occupancy -->
+            <div class="custom-card">
+                <div class="card-header">
+                    <div class="card-header-title">
+                        <lightning-icon icon-name="standard:home" size="small"></lightning-icon>
+                        <h2>Hostel Room Occupancy</h2>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <template for:each={roomSummaries} for:item="h">
+                        <div key={h.hostelId} class="occupancy-row">
+                            <div class="occupancy-meta">
+                                <strong>{h.hostelName} ({h.hostelType})</strong>
+                                <span>{h.occupiedRooms} / {h.totalRooms} Rooms ({h.occupancyPercentage}%)</span>
+                            </div>
+                            <div class="bar-outer">
+                                <div class={h.barClass} data-width={h.occupancyPercentage}></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
